@@ -22,6 +22,9 @@ public class Main extends EduardPlugin {
 
 	private static EconomyManager manager;
 
+	public void teste() {
+		
+	}
 	@Override
 	public void onEnable() {
 		plugin = this;
