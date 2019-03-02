@@ -1,0 +1,4 @@
+
+top-format-header: &a&lRank de Dinheiro
+top-format: &b$positionº &f$player: &a$amount
+top-size: 10
