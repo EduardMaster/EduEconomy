@@ -28,6 +28,7 @@ public class Main extends EduardPlugin {
 	@Override
 	public void onEnable() {
 		plugin = this;
+		setFree(true);
 		new MoneyEvents().register(this);
 		new EconomyCommand().register();
 		startAutoSave();

@@ -1,8 +1,0 @@
-
-money-add: &aVocê adiciou $amount de dinheiro para o jogador $player
-money-add-player: &aFoi adicionado ao seu banco $amount pelo Jogador $player
-money-set: &aVocê definiu $amount de dinheiro para o jogador $player
-money-remove: &aVocê remevou $amount de dinheiro para o jogador $player
-money-check: &aSeu dinheiro é $amount
-money-changed: &aSeu dinheiro foi atualizado pelo jogador $player
-
