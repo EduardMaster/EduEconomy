@@ -4,27 +4,30 @@ package net.eduard.economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 
+import net.eduard.api.lib.Mine;
+import net.eduard.api.lib.modules.VaultAPI;
 import net.eduard.api.lib.storage.StorageAPI;
 import net.eduard.api.server.EduardPlugin;
 import net.eduard.api.server.Systems;
 import net.eduard.economy.command.EconomyCommand;
-import net.eduard.economy.event.MoneyEvents;
+import net.eduard.economy.events.MoneyEvents;
 import net.eduard.economy.manager.EconomyManager;
+import net.eduard.economy.manager.EconomyVaultSupport;
 import net.milkbowl.vault.Vault;
 import net.milkbowl.vault.economy.Economy;
 
-public class Main extends EduardPlugin {
-	private static Main plugin;
+public class EduEconomy extends EduardPlugin {
+	private static EduEconomy plugin;
 
-	public static Main getInstance() {
+	public static EduEconomy getInstance() {
 		return plugin;
 	} 
 
-	private static EconomyManager manager;
-
-	public void teste() {
-		
+	private EconomyManager manager;
+	public EconomyManager getManager() {
+		return manager;
 	}
+	
 	@Override
 	public void onEnable() {
 		plugin = this;
@@ -34,7 +37,17 @@ public class Main extends EduardPlugin {
 		startAutoSave();
 		StorageAPI.register(EconomyManager.class);
 		reload();
+		if (Mine.hasPlugin("Vault")) {
+			enableVaultSupport();
+		}
+	
 		
+		
+	}
+	public void enableVaultSupport() {
+		Bukkit.getServicesManager().register(Economy.class, new EconomyVaultSupport(), Vault.getPlugin(Vault.class),
+				ServicePriority.Normal);
+		VaultAPI.setupVault();
 	}
 
 	public void save() {
@@ -55,22 +68,13 @@ public class Main extends EduardPlugin {
 			save();
 		}
 		Systems.setCoinSystem(manager);
-		Bukkit.getServicesManager().register(Economy.class, manager, Vault.getPlugin(Vault.class),
-				ServicePriority.Normal);
+		
 	}
 
 	@Override
 	public void onDisable() {
 		Bukkit.getServicesManager().unregister(manager);
 		save();
-	}
-
-	public static EconomyManager getManager() {
-		return manager;
-	}
-
-	public static void setManager(EconomyManager manager) {
-		Main.manager = manager;
 	}
 
 }

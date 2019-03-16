@@ -1,5 +1,5 @@
 
-package net.eduard.economy.event;
+package net.eduard.economy.events;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;

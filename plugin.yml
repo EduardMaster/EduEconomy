@@ -1,6 +1,6 @@
 name: EduEconomy
 description: Sistema de economia completo
-main: net.eduard.economy.Main
+main: net.eduard.economy.EduEconomy
 version: 1.0
 author: Eduard
 authors: [Eduard]

@@ -8,7 +8,8 @@ import net.eduard.api.lib.Mine;
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
 import net.eduard.api.lib.modules.FakePlayer;
-import net.eduard.economy.Main;
+import net.eduard.api.lib.modules.VaultAPI;
+import net.eduard.economy.EduEconomy;
 
 public class EconomyAddCommand extends CommandManager {
 
@@ -24,12 +25,13 @@ public class EconomyAddCommand extends CommandManager {
 			sendUsage(sender);
 		} else {
 			FakePlayer fakeplayer = new FakePlayer(args[1]);
-			Main.getManager().addBalance(fakeplayer, Mine.toDouble(args[2]));
-			sender.sendMessage(Main.getInstance().message("money-add").replace("$player", fakeplayer.getName())
-					.replace("$amount", Extra.MONEY.format(Mine.toDouble(args[2]))));
+			double amount = Mine.toDouble(args[2]);
+			VaultAPI.getEconomy().depositPlayer(fakeplayer, amount);
+			sender.sendMessage(EduEconomy.getInstance().message("money-add").replace("$player", fakeplayer.getName())
+					.replace("$amount", Extra.MONEY.format(amount)));
 			if (fakeplayer.getPlayer() != null) {
-				fakeplayer.getPlayer()
-						.sendMessage(Main.getInstance().message("money-changed").replace("$player", sender.getName()));
+				fakeplayer.getPlayer().sendMessage(
+						EduEconomy.getInstance().message("money-changed").replace("$player", sender.getName()));
 			}
 		}
 
