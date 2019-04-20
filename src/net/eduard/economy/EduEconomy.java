@@ -45,7 +45,7 @@ public class EduEconomy extends EduardPlugin {
 		
 	}
 	public void enableVaultSupport() {
-		Bukkit.getServicesManager().register(Economy.class, new EconomyVaultSupport(), Vault.getPlugin(Vault.class),
+		Bukkit.getServicesManager().register(Economy.class, new EconomyVaultSupport(), this,
 				ServicePriority.Normal);
 		VaultAPI.setupVault();
 	}
