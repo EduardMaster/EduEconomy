@@ -15,7 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
 import net.eduard.api.lib.modules.FakePlayer;
-import net.eduard.economy.EduEconomy;
+import net.eduard.economy.Main;
 
 public class EconomyTopCommand extends CommandManager {
 
@@ -39,15 +39,15 @@ public class EconomyTopCommand extends CommandManager {
 	}
 
 	public void show(CommandSender sender) {
-		Map<FakePlayer, Double> currency = EduEconomy.getInstance().getManager().getCurrency();
+		Map<FakePlayer, Double> currency = Main.getInstance().getManager().getCurrency();
 		Stream<Entry<FakePlayer, Double>> streamOrdenada = currency.entrySet().stream()
 				.sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))
-				.limit(EduEconomy.getInstance().getConfigs().getInt("top-size"));
+				.limit(Main.getInstance().getConfigs().getInt("top-size"));
 		List<Entry<FakePlayer, Double>> lista = streamOrdenada.collect(Collectors.toList());
-		sender.sendMessage(EduEconomy.getInstance().getConfigs().message("top-format-header"));
+		sender.sendMessage(Main.getInstance().getConfigs().message("top-format-header"));
 		int posicao = 1;
 		for (Entry<FakePlayer, Double> entrada : lista) {
-			sender.sendMessage(EduEconomy.getInstance().getConfigs().message("top-format")
+			sender.sendMessage(Main.getInstance().getConfigs().message("top-format")
 					.replace("$player", entrada.getKey().getName())
 					.replace("$amount", Extra.MONEY.format(entrada.getValue())).replace("$position", "" + posicao));
 			posicao++;

@@ -7,7 +7,7 @@ import org.bukkit.OfflinePlayer;
 
 import net.eduard.api.lib.modules.Extra;
 import net.eduard.api.lib.modules.FakePlayer;
-import net.eduard.economy.EduEconomy;
+import net.eduard.economy.Main;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
@@ -206,7 +206,7 @@ public class VaultSupport implements Economy {
 	}
 
 	public boolean isEnabled() {
-		return EduEconomy.getInstance().isEnabled();
+		return Main.getInstance().isEnabled();
 	}
 
 	public EconomyResponse withdrawPlayer(String playerName, double amount) {

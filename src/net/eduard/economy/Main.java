@@ -16,10 +16,10 @@ import net.eduard.economy.manager.EconomyVaultSupport;
 import net.milkbowl.vault.Vault;
 import net.milkbowl.vault.economy.Economy;
 
-public class EduEconomy extends EduardPlugin {
-	private static EduEconomy plugin;
+public class Main extends EduardPlugin {
+	private static Main plugin;
 
-	public static EduEconomy getInstance() {
+	public static Main getInstance() {
 		return plugin;
 	} 
 
@@ -34,7 +34,7 @@ public class EduEconomy extends EduardPlugin {
 		setFree(true);
 		new MoneyEvents().register(this);
 		new EconomyCommand().register();
-		startAutoSave();
+		
 		StorageAPI.register(EconomyManager.class);
 		reload();
 		if (Mine.hasPlugin("Vault")) {

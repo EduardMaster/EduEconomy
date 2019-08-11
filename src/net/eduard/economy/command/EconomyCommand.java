@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
 import net.eduard.api.lib.modules.FakePlayer;
-import net.eduard.economy.EduEconomy;
+import net.eduard.economy.Main;
 
 public class EconomyCommand extends CommandManager {
 
@@ -26,8 +26,8 @@ public class EconomyCommand extends CommandManager {
 		if (args.length == 0) {
 			if (sender instanceof Player) {
 				Player p = (Player) sender;
-				p.sendMessage(EduEconomy.getInstance().message("money-check").replace("$amount",
-						"" + Extra.MONEY.format(EduEconomy.getInstance().getManager().getBalance(new FakePlayer(p)))));
+				p.sendMessage(Main.getInstance().message("money-check").replace("$amount",
+						"" + Extra.MONEY.format(Main.getInstance().getManager().getBalance(new FakePlayer(p)))));
 				return true;
 			}
 		}
