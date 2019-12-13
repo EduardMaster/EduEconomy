@@ -8,14 +8,13 @@ import net.eduard.api.lib.Mine;
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
 import net.eduard.api.lib.modules.FakePlayer;
-import net.eduard.api.lib.modules.VaultAPI;
 import net.eduard.economy.Main;
 
 public class EconomyAddCommand extends CommandManager {
 
 	public EconomyAddCommand() {
 		super("add", "adicionar");
-		setUsage("/money add <player> <amount>");
+		setUsage("/money add <jogador> <quantidade>");
 		setDescription("Adicionar saldo para o jogador");
 	}
 
@@ -26,9 +25,10 @@ public class EconomyAddCommand extends CommandManager {
 		} else {
 			FakePlayer fakeplayer = new FakePlayer(args[1]);
 			double amount = Mine.toDouble(args[2]);
-			VaultAPI.getEconomy().depositPlayer(fakeplayer, amount);
+		
 			sender.sendMessage(Main.getInstance().message("money-add").replace("$player", fakeplayer.getName())
 					.replace("$amount", Extra.MONEY.format(amount)));
+			Main.getInstance().getManager().addCoins(fakeplayer, amount);
 			if (fakeplayer.getPlayer() != null) {
 				fakeplayer.getPlayer().sendMessage(
 						Main.getInstance().message("money-changed").replace("$player", sender.getName()));

@@ -17,7 +17,10 @@ public class EconomyCommand extends CommandManager {
 		register(new EconomyHelpCommand());
 		register(new EconomyRemoveCommand());
 		register(new EconomySetCommand());
+		register(new EconomyReloadCommand());
+		register(new EconomyPayCommand());
 		register(new EconomyTopCommand());
+		register(new EconomyShowCommand());
 	}
 
 	@Override

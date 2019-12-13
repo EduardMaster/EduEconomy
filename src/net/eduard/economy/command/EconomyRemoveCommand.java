@@ -14,7 +14,7 @@ public class EconomyRemoveCommand extends CommandManager {
 
 	public EconomyRemoveCommand() {
 		super("remove","take","tirar","remover");
-		setUsage("/money remove <player> <amount>");
+		setUsage("/money remover <jogador> <quantidade>");
 		setDescription("Remover saldo do jogador");
 	}
 	@Override

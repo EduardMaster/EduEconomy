@@ -1,10 +1,11 @@
 name: EduEconomy
-description: Sistema de economia completo
+description: Sistema de economia completo com suporte MySQ
 main: net.eduard.economy.Main
 version: 1.0
 author: Eduard
 authors: [Eduard]
 depend: [EduardAPI]
+softdepend: [Vault,FeatherBoard,LegendChat]
 website: https://www.youtube.com/user/EduTutoriaisHD
 commands:
   money:

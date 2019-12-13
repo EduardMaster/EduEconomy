@@ -16,7 +16,7 @@ public class EconomyHelpCommand extends CommandManager {
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
 		for (CommandManager cmd : getParent().getCommands().values()) {
-			sender.sendMessage("ง7"+cmd.getUsage()+" ง8- งf"+cmd.getDescription());
+			sender.sendMessage("ยง7"+cmd.getUsage()+" ยง8- ยงf"+cmd.getDescription());
 		}
 		return true;
 	}

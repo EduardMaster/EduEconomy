@@ -6,7 +6,9 @@ import net.eduard.api.server.CoinSystem;
 
 public class EconomyManager extends CurrencyManager implements CoinSystem {
 
-	
+	public EconomyManager(){
+
+	}
 
 	public void addCoins(FakePlayer player, double amount) {
 		addBalance(player, amount);
@@ -14,7 +16,11 @@ public class EconomyManager extends CurrencyManager implements CoinSystem {
 	}
 
 	public void removeCoins(FakePlayer player, double amount) {
-		removeCoins(player, amount);
+		removeBalance(player, amount);
+
+	}
+	public boolean hasCoins(FakePlayer player, double amount) {
+		return containsBalance(player, amount);
 
 	}
 

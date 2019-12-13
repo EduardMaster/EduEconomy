@@ -14,7 +14,7 @@ public class EconomySetCommand extends CommandManager {
 
 	public EconomySetCommand() {
 		super("set", "setar", "define", "difinir");
-		setUsage("/money set <player> <amount>");
+		setUsage("/money set <jogador> <quantidade>");
 		setDescription("Definir saldo para o jogador");
 	}
 

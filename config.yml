@@ -2,3 +2,16 @@
 top-format-header: &a&lRank de Dinheiro
 top-format: &b$positionº &f$player: &a$amount
 top-size: 10
+
+
+Mobs:
+  1:
+    local: 
+    id: 1
+    nivel: 1
+    peitoral:
+  2:
+  3:
+  4:
+    
+      

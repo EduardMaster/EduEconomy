@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -33,7 +32,7 @@ public class EconomyTopCommand extends CommandManager {
 			public void run() {
 				show(sender);
 			}
-		}.runTaskAsynchronously(getPlugin());
+		}.runTaskAsynchronously(getPluginInstance());
 
 		return true;
 	}

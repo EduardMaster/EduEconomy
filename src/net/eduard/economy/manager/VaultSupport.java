@@ -1,6 +1,7 @@
 package net.eduard.economy.manager;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bukkit.OfflinePlayer;
 
@@ -11,38 +12,45 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
 
-public class EconomyVaultSupport implements Economy {
+public class VaultSupport implements Economy {
 	public EconomyResponse bankBalance(String bankName) {
-		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		EconomyManager m = Main.getInstance().getManager();
+		FakePlayer fake = new FakePlayer(bankName);
+		return new EconomyResponse(0, m.getBalance(fake), ResponseType.SUCCESS, null);
 
 	}
 
 	public EconomyResponse bankDeposit(String bankName, double amount) {
-		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		EconomyManager m = Main.getInstance().getManager();
+		FakePlayer fake = new FakePlayer(bankName);
+		return new EconomyResponse(amount, m.getBalance(fake), ResponseType.SUCCESS, null);
 	}
 
 	public EconomyResponse bankHas(String bankName, double amount) {
-		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		EconomyManager m = Main.getInstance().getManager();
+		FakePlayer fake = new FakePlayer(bankName);
+		if (m.getBalance(fake) >= amount)
+			return new EconomyResponse(amount, m.getBalance(fake), ResponseType.SUCCESS, null);
+		return new EconomyResponse(amount, m.getBalance(fake), ResponseType.FAILURE, null);
 	}
 
 	public EconomyResponse bankWithdraw(String bankName, double amount) {
-		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		EconomyManager m = Main.getInstance().getManager();
+		FakePlayer fake = new FakePlayer(bankName);
+		return new EconomyResponse(amount, m.getBalance(fake), ResponseType.SUCCESS, null);
 	}
 
 	public boolean hasBank(String bankName) {
-		return false;
+		return true;
 	}
 
 	public EconomyResponse createBank(String bankName, String bankOwner) {
-		
+			return new EconomyResponse(0, 0, ResponseType.SUCCESS, null);
 
-		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
 	}
 
 	public EconomyResponse createBank(String bankName, OfflinePlayer player) {
-	
-		
-		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+			return new EconomyResponse(0, 0, ResponseType.SUCCESS, null);
 	}
 
 	public boolean createPlayerAccount(String playerName) {
@@ -70,21 +78,25 @@ public class EconomyVaultSupport implements Economy {
 	}
 
 	public EconomyResponse deleteBank(String bankName) {
-	
-		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		EconomyManager m = Main.getInstance().getManager();
+		FakePlayer fake = new FakePlayer(bankName);
+			m.getCurrency().remove(fake);
+			return new EconomyResponse(0, 0, ResponseType.SUCCESS, null);
+
 	}
 
 	public EconomyResponse depositPlayer(String playerName, double amount) {
+		EconomyManager m = Main.getInstance().getManager();
 		FakePlayer fake = new FakePlayer(playerName);
-		Main.getInstance().getManager().addBalance(fake, amount);
-
-		return new EconomyResponse(amount, Main.getInstance().getManager().getBalance(fake), ResponseType.SUCCESS, null);
+		m.addBalance(fake, amount);
+		return new EconomyResponse(amount, m.getBalance(fake), ResponseType.SUCCESS, null);
 	}
 
 	public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
+		EconomyManager m = Main.getInstance().getManager();
 		FakePlayer fake = new FakePlayer(player);
-		Main.getInstance().getManager().addBalance(fake, amount);
-		return new EconomyResponse(amount,  Main.getInstance().getManager().getBalance(fake), ResponseType.SUCCESS, null);
+		m.addBalance(fake, amount);
+		return new EconomyResponse(amount, m.getBalance(fake), ResponseType.SUCCESS, null);
 	}
 
 	public EconomyResponse depositPlayer(String playerName, String wourldName, double amount) {
@@ -104,11 +116,15 @@ public class EconomyVaultSupport implements Economy {
 	}
 
 	public double getBalance(String playerName) {
-		return Main.getInstance().getManager().getBalance(new FakePlayer(playerName));
+		EconomyManager m = Main.getInstance().getManager();
+		FakePlayer fake = new FakePlayer(playerName);
+		return m.getBalance(fake);
 	}
 
 	public double getBalance(OfflinePlayer player) {
-		return Main.getInstance().getManager().getBalance(new FakePlayer(player));
+		EconomyManager m = Main.getInstance().getManager();
+		FakePlayer fake = new FakePlayer(player);
+		return m.getBalance(fake);
 	}
 
 	public double getBalance(String playerName, String worldName) {
@@ -120,7 +136,12 @@ public class EconomyVaultSupport implements Economy {
 	}
 
 	public List<String> getBanks() {
-		return null;
+		return Main.getInstance().getManager()
+				.getCurrency()
+				.entrySet()
+				.stream()
+				.map(entry -> entry.getKey().getName())
+				.collect(Collectors.toList());
 	}
 
 	public boolean has(String playerName, double amount) {
@@ -156,23 +177,27 @@ public class EconomyVaultSupport implements Economy {
 	}
 
 	public boolean hasBankSupport() {
-		return false;
+		return true;
 	}
 
 	public EconomyResponse isBankMember(String bankName, String playerName) {
-		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		EconomyResponse res = new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		return res;
 	}
 
 	public EconomyResponse isBankMember(String bankName, OfflinePlayer player) {
-		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		EconomyResponse res = new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		return res;
 	}
 
 	public EconomyResponse isBankOwner(String bankName, String playerName) {
-		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		EconomyResponse res = new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		return res;
 	}
 
 	public EconomyResponse isBankOwner(String bankName, OfflinePlayer player) {
-		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		EconomyResponse res = new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
+		return res;
 	}
 
 	public boolean isEnabled() {
@@ -180,18 +205,17 @@ public class EconomyVaultSupport implements Economy {
 	}
 
 	public EconomyResponse withdrawPlayer(String playerName, double amount) {
+		EconomyManager m = Main.getInstance().getManager();
 		FakePlayer fake = new FakePlayer(playerName);
-		Main.getInstance().getManager().removeBalance(fake, amount);
-
-		return new EconomyResponse(amount, Main.getInstance().getManager().getBalance(fake), ResponseType.SUCCESS, null);
+		m.removeBalance(fake, amount);
+		return new EconomyResponse(amount, m.getBalance(fake), ResponseType.SUCCESS, null);
 	}
 
 	public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
+		EconomyManager m = Main.getInstance().getManager();
 		FakePlayer fake = new FakePlayer(player);
-		Main.getInstance().getManager().removeBalance(fake, amount);
-
-		return new EconomyResponse(amount, Main.getInstance().getManager().getBalance(fake), ResponseType.SUCCESS,
-				null);
+		m.removeBalance(fake, amount);
+		return new EconomyResponse(amount, m.getBalance(fake), ResponseType.SUCCESS, null);
 	}
 
 	public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
@@ -202,8 +226,9 @@ public class EconomyVaultSupport implements Economy {
 		return withdrawPlayer(player, amount);
 	}
 
+	
 	public String getName() {
-
+		
 		return "EduEconomy";
 	}
 
