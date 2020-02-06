@@ -5,7 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.eduard.api.lib.Mine;
+import net.eduard.api.lib.modules.Mine;
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
 import net.eduard.api.lib.modules.FakePlayer;
@@ -31,7 +31,7 @@ public class EconomyPayCommand extends CommandManager {
 				String alvonome = args[1];
 				FakePlayer alvoConta = new FakePlayer(alvonome);
 				FakePlayer playerConta = new FakePlayer(p);
-				Double quantidade = Mine.toDouble(args[2]);
+				Double quantidade = Extra.toDouble(args[2]);
 				if (quantidade <= 0 || Double.isNaN(quantidade) || Double.isInfinite(quantidade)
 						) {
 					sender.sendMessage("§cNão pode ser numero negativo.");

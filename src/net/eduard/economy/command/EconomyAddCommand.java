@@ -4,7 +4,7 @@ package net.eduard.economy.command;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import net.eduard.api.lib.Mine;
+import net.eduard.api.lib.modules.Mine;
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
 import net.eduard.api.lib.modules.FakePlayer;
@@ -24,7 +24,7 @@ public class EconomyAddCommand extends CommandManager {
 			sendUsage(sender);
 		} else {
 			FakePlayer fakeplayer = new FakePlayer(args[1]);
-			double amount = Mine.toDouble(args[2]);
+			double amount = Extra.toDouble(args[2]);
 		
 			sender.sendMessage(Main.getInstance().message("money-add").replace("$player", fakeplayer.getName())
 					.replace("$amount", Extra.MONEY.format(amount)));

@@ -5,7 +5,7 @@ import net.eduard.api.lib.manager.CurrencyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 
-import net.eduard.api.lib.Mine;
+import net.eduard.api.lib.modules.Mine;
 import net.eduard.api.lib.modules.VaultAPI;
 import net.eduard.api.lib.storage.StorageAPI;
 import net.eduard.api.server.EduardPlugin;

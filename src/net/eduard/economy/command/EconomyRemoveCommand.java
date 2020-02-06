@@ -4,7 +4,7 @@ package net.eduard.economy.command;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import net.eduard.api.lib.Mine;
+import net.eduard.api.lib.modules.Mine;
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
 import net.eduard.api.lib.modules.FakePlayer;
@@ -24,9 +24,9 @@ public class EconomyRemoveCommand extends CommandManager {
 			sendUsage(sender);
 		} else {
 			FakePlayer fakeplayer = new FakePlayer(args[1]);
-			Main.getInstance().getManager().removeBalance(fakeplayer, Mine.toDouble(args[2]));
+			Main.getInstance().getManager().removeBalance(fakeplayer, Extra.toDouble(args[2]));
 			sender.sendMessage(Main.getInstance().message("money-remove").replace("$player", fakeplayer.getName())
-					.replace("$amount", Extra.MONEY.format(Mine.toDouble(args[2]))));
+					.replace("$amount", Extra.MONEY.format(Extra.toDouble(args[2]))));
 			if (fakeplayer.getPlayer() != null) {
 				fakeplayer.getPlayer()
 						.sendMessage(Main.getInstance().message("money-changed").replace("$player", sender.getName()));
