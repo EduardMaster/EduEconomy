@@ -8,11 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Map.Entry;
 
-import net.eduard.api.lib.manager.TimeManager;
+import net.eduard.api.lib.task.TimeManager;
 import net.eduard.api.lib.modules.Extra;
-import net.eduard.api.lib.modules.FakePlayer;
-import net.eduard.economy.Main;
-import net.eduard.economy.manager.EconomyManager;
+import net.eduard.api.lib.player.FakePlayer;
+import net.eduard.economy.EduEconomy;
+import net.eduard.economy.core.EconomyManager;
 
 public class GeradorBackupBukkit extends TimeManager {
 	public GeradorBackupBukkit() {
@@ -21,7 +21,7 @@ public class GeradorBackupBukkit extends TimeManager {
 
 	@Override
 	public void run() { 
-		EconomyManager m = Main.getInstance().getManager();
+		EconomyManager m = EduEconomy.getInstance().getManager();
 		StringBuilder stringBuilder = new StringBuilder();
 		StringBuilder b = new StringBuilder();
 		stringBuilder.append("INSERT INTO CONTAS VALUES ");
@@ -40,7 +40,7 @@ public class GeradorBackupBukkit extends TimeManager {
 			b.append("" + name + " " + dinheiro);
 		}
 		SimpleDateFormat tempo = new SimpleDateFormat("MM-dd-hh-mm-ss");
-		File pai = new File(Main.getInstance().getDataFolder(), "backups");
+		File pai = new File(EduEconomy.getInstance().getDataFolder(), "backups");
 		pai.mkdirs();
 		File file = new File(pai, "backup-" + tempo.format(Extra.getNow()) + ".txt");
 		try {
@@ -50,7 +50,7 @@ public class GeradorBackupBukkit extends TimeManager {
 			e.printStackTrace();
 		}
 
-		File dat = new File(Main.getInstance().getDataFolder(), "players.dat");
+		File dat = new File(EduEconomy.getInstance().getDataFolder(), "players.dat");
 		try {
 			Files.write(dat.toPath(), b.toString().getBytes());
 		} catch (IOException e) {
@@ -58,8 +58,8 @@ public class GeradorBackupBukkit extends TimeManager {
 			e.printStackTrace();
 		}
 
-//		Main.getInstance().getConfigs().set("backup", );
-//		Main.getInstance().getConfigs().saveConfig();
+//		EduEconomy.getInstance().getConfigs().set("backup", );
+//		EduEconomy.getInstance().getConfigs().saveConfig();
 
 	}
 

@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-import net.eduard.api.lib.manager.DBManager;
+import net.eduard.api.lib.database.DBManager;
 
 public class SolarIconomyToFlatFile {
 	public static void main(String[] args) {

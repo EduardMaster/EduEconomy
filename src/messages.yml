@@ -6,3 +6,6 @@ money-remove: &aVocê remevou $amount de dinheiro para o jogador $player
 money-check: &aSeu dinheiro é $amount
 money-changed: &aSeu dinheiro foi atualizado pelo jogador $player
 
+top-format-header: &a&lRank de Dinheiro
+top-format: &b$positionº &f$player: &a$amount
+top-size: 10

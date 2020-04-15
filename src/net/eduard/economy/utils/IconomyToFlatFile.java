@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.eduard.api.lib.manager.DBManager;
+import net.eduard.api.lib.database.DBManager;
 import net.eduard.api.lib.modules.Extra;
 
 public class IconomyToFlatFile {

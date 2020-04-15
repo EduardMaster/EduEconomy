@@ -1,8 +1,8 @@
-package net.eduard.economy.manager;
+package net.eduard.economy.core;
 
 import net.eduard.api.lib.manager.CurrencyManager;
-import net.eduard.api.lib.modules.FakePlayer;
-import net.eduard.api.server.CoinSystem;
+import net.eduard.api.lib.player.FakePlayer;
+import net.eduard.api.server.currency.CoinSystem;
 
 public class EconomyManager extends CurrencyManager implements CoinSystem {
 

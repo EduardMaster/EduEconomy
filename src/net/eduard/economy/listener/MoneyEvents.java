@@ -1,8 +1,8 @@
 
-package net.eduard.economy.events;
+package net.eduard.economy.listener;
 
-import net.eduard.api.lib.modules.FakePlayer;
-import net.eduard.economy.Main;
+import net.eduard.api.lib.player.FakePlayer;
+import net.eduard.economy.EduEconomy;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -16,8 +16,9 @@ public class MoneyEvents extends EventsManager {
 
 	}
 	@EventHandler
-	public void event(PlayerJoinEvent e) {
-		Main.getInstance().getManager().getCoins(new FakePlayer(e.getPlayer()));
+	public void event(PlayerJoinEvent e)
+	{
+		EduEconomy.getInstance().getManager().getCoins(new FakePlayer(e.getPlayer()));
 	}
 
 }

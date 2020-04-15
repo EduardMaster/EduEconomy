@@ -5,7 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import net.eduard.api.lib.manager.CommandManager;
-import net.eduard.economy.Main;
+import net.eduard.economy.EduEconomy;
 
 public class EconomyReloadCommand extends CommandManager {
 
@@ -16,7 +16,7 @@ public class EconomyReloadCommand extends CommandManager {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		Main.getInstance().reload();
+		EduEconomy.getInstance().reload();
 		sender.sendMessage("§aRecarregando sistema");
 
 		return true;

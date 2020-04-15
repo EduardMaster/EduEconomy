@@ -6,8 +6,8 @@ import org.bukkit.command.CommandSender;
 
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
-import net.eduard.api.lib.modules.FakePlayer;
-import net.eduard.economy.Main;
+import net.eduard.api.lib.player.FakePlayer;
+import net.eduard.economy.EduEconomy;
 
 public class EconomyShowCommand extends CommandManager {
 
@@ -27,7 +27,7 @@ public class EconomyShowCommand extends CommandManager {
 			FakePlayer fake = new FakePlayer(jogador);
 
 			sender.sendMessage("§aO dinheiro do jogador " + jogador + " é "
-					+ Extra.MONEY.format(Main.getInstance().getManager().getCoins(fake)));
+					+ Extra.formatMoney(EduEconomy.getInstance().getManager().getCoins(fake)));
 
 		}
 		return true;

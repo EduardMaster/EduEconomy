@@ -1,14 +1,13 @@
 
 package net.eduard.economy.command;
 
+import net.eduard.economy.EduEconomy;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import net.eduard.api.lib.modules.Mine;
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
-import net.eduard.api.lib.modules.FakePlayer;
-import net.eduard.economy.Main;
+import net.eduard.api.lib.player.FakePlayer;
 
 public class EconomyRemoveCommand extends CommandManager {
 
@@ -24,12 +23,13 @@ public class EconomyRemoveCommand extends CommandManager {
 			sendUsage(sender);
 		} else {
 			FakePlayer fakeplayer = new FakePlayer(args[1]);
-			Main.getInstance().getManager().removeBalance(fakeplayer, Extra.toDouble(args[2]));
-			sender.sendMessage(Main.getInstance().message("money-remove").replace("$player", fakeplayer.getName())
-					.replace("$amount", Extra.MONEY.format(Extra.toDouble(args[2]))));
+			double valor = Extra.fromMoneyToDouble(args[2]);
+			EduEconomy.getInstance().getManager().removeBalance(fakeplayer, valor);
+			sender.sendMessage(EduEconomy.getInstance().message("money-remove").replace("$player", fakeplayer.getName())
+					.replace("$amount", Extra.formatMoney(Extra.toDouble(args[2]))));
 			if (fakeplayer.getPlayer() != null) {
 				fakeplayer.getPlayer()
-						.sendMessage(Main.getInstance().message("money-changed").replace("$player", sender.getName()));
+						.sendMessage(EduEconomy.getInstance().message("money-changed").replace("$player", sender.getName()));
 			}
 		}
 
