@@ -77,7 +77,7 @@ public class EduEconomy extends EduardPlugin {
             manager = new EconomyManager();
             save();
         }
-        Systems.setCoinSystem(manager);
+
 
     }
 
