@@ -38,9 +38,12 @@ public class EconomyPayCommand extends CommandManager {
                 if (EduEconomy.getInstance().getManager().hasCoins(playerConta, quantidade)) {
                     EduEconomy.getInstance().getManager().addCoins(alvoConta, quantidade);
                     EduEconomy.getInstance().getManager().removeCoins(playerConta, quantidade);
-                    sender.sendMessage("§aVocê pagou " + Extra.formatMoney(quantidade) + " para " + alvonome);
+                    sender.sendMessage(EduEconomy.getInstance().message("money-pay").
+                            replace("$amount",Extra.formatMoney(quantidade)).
+                            replace("$player",alvonome));
+
                 } else {
-                    sender.sendMessage("§cDinheiro insuficiente para poder pagar outro jogador.");
+                    sender.sendMessage(EduEconomy.getInstance().message("money-need"));
                 }
 
 

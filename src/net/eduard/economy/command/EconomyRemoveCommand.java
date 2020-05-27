@@ -24,7 +24,13 @@ public class EconomyRemoveCommand extends CommandManager {
 		} else {
 			FakePlayer fakeplayer = new FakePlayer(args[1]);
 			double valor = Extra.fromMoneyToDouble(args[2]);
+			valor = Math.abs(valor);
 			EduEconomy.getInstance().getManager().removeBalance(fakeplayer, valor);
+			if (args.length >= 4){
+				if (args[3] ==("-msg")){
+					return true;
+				}
+			}
 			sender.sendMessage(EduEconomy.getInstance().message("money-remove").replace("$player", fakeplayer.getName())
 					.replace("$amount", Extra.formatMoney(Extra.toDouble(args[2]))));
 			if (fakeplayer.getPlayer() != null) {

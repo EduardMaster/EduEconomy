@@ -23,11 +23,13 @@ public class EconomyShowCommand extends CommandManager {
 		if (args.length == 0) {
 			sendUsage(sender);
 		} else {
-			String jogador = args[0];
+			String jogador = args[1];
 			FakePlayer fake = new FakePlayer(jogador);
+			String quantidade = Extra.formatMoney(EduEconomy.getInstance().getManager().getCoins(fake));
+			sender.sendMessage(EduEconomy.getInstance().message("money-player-check").
+					replace("$amount",quantidade).
+					replace("$player",jogador));
 
-			sender.sendMessage("§aO dinheiro do jogador " + jogador + " é "
-					+ Extra.formatMoney(EduEconomy.getInstance().getManager().getCoins(fake)));
 
 		}
 		return true;

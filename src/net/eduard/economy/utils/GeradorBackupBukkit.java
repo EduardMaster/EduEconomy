@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Map.Entry;
 
-import net.eduard.api.lib.task.TimeManager;
+import net.eduard.api.lib.manager.TimeManager;
 import net.eduard.api.lib.modules.Extra;
 import net.eduard.api.lib.player.FakePlayer;
 import net.eduard.economy.EduEconomy;

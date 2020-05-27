@@ -1,11 +1,14 @@
 
-money-add: &aVocê adiciou $amount de dinheiro para o jogador $player
-money-add-player: &aFoi adicionado ao seu banco $amount pelo Jogador $player
-money-set: &aVocê definiu $amount de dinheiro para o jogador $player
-money-remove: &aVocê remevou $amount de dinheiro para o jogador $player
-money-check: &aSeu dinheiro é $amount
-money-changed: &aSeu dinheiro foi atualizado pelo jogador $player
+money-add: "&aVocê adiciou $amount de dinheiro para o jogador $player"
+money-add-player: "&aFoi adicionado ao seu banco $amount pelo Jogador $player"
+money-set: "&aVocê definiu $amount de dinheiro para o jogador $player"
+money-remove: "&aVocê remevou $amount de dinheiro para o jogador $player"
+money-check: "&aSeu dinheiro é $amount"
+money-changed: "&aSeu dinheiro foi atualizado pelo jogador $player"
+money-need: "§cDinheiro insuficiente para poder pagar outro jogador."
+money-pay: "§aVocê pagou $amount para o $player"
+money-player-check: "§aO dinheiro do jogador $player é $amount"
 
-top-format-header: &a&lRank de Dinheiro
-top-format: &b$positionº &f$player: &a$amount
+top-format-header: "&a&lRank de Dinheiro"
+top-format: "&b$positionº &f$player: &a$amount"
 top-size: 10

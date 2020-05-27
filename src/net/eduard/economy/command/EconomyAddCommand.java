@@ -24,10 +24,17 @@ public class EconomyAddCommand extends CommandManager {
 		} else {
 			FakePlayer fakeplayer = new FakePlayer(args[1]);
 			double amount = Extra.fromMoneyToDouble(args[2]);
-		
+			amount = Math.abs(amount);
+
+
+			EduEconomy.getInstance().getManager().addCoins(fakeplayer, amount);
+			if (args.length >= 4){
+				if (args[3] ==("-msg")){
+					return true;
+				}
+			}
 			sender.sendMessage(EduEconomy.getInstance().message("money-add").replace("$player", fakeplayer.getName())
 					.replace("$amount", Extra.formatMoney(amount)));
-			EduEconomy.getInstance().getManager().addCoins(fakeplayer, amount);
 			if (fakeplayer.getPlayer() != null) {
 				fakeplayer.getPlayer().sendMessage(
 						EduEconomy.getInstance().message("money-changed").replace("$player", sender.getName()));
