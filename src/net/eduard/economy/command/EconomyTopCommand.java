@@ -14,7 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
-import net.eduard.api.lib.player.FakePlayer;
+import net.eduard.api.lib.game.FakePlayer;
 
 public class EconomyTopCommand extends CommandManager {
 

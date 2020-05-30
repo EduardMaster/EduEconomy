@@ -1,7 +1,9 @@
 
 package net.eduard.economy;
 
+import net.eduard.api.lib.game.FakePlayer;
 import net.eduard.api.lib.manager.CurrencyManager;
+import net.eduard.economy.core.PlayerEconomyAccount;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 
@@ -9,7 +11,6 @@ import net.eduard.api.lib.modules.Mine;
 import net.eduard.api.lib.modules.VaultAPI;
 import net.eduard.api.lib.storage.StorageAPI;
 import net.eduard.api.server.EduardPlugin;
-import net.eduard.api.server.Systems;
 import net.eduard.economy.command.EconomyCommand;
 import net.eduard.economy.listener.MoneyEvents;
 import net.eduard.economy.core.EconomyManager;
@@ -30,6 +31,20 @@ public class EduEconomy extends EduardPlugin {
         return manager;
     }
 
+    public PlayerEconomyAccount createAccountIfNotExists(FakePlayer player) {
+        PlayerEconomyAccount account = getSqlManager().getData(PlayerEconomyAccount.class,"playerName",player.getName());
+        if (account == null){
+            account = new PlayerEconomyAccount();
+            account.setPlayerName(player.getName());
+            manager.setCoins(player,0);
+            getSqlManager().insertData(account);
+
+        }
+
+        return account;
+
+    }
+
     @Override
     public void onEnable() {
         setFree(true);
@@ -47,9 +62,9 @@ public class EduEconomy extends EduardPlugin {
             log("Ativando suporte ao 'FeatherBoard' variavel $money");
             new FeatherBoardSupport();
         }
-
-        StorageAPI.register(EconomyManager.class);
         StorageAPI.register(CurrencyManager.class);
+        StorageAPI.register(EconomyManager.class);
+
         reload();
 
     }
@@ -89,4 +104,9 @@ public class EduEconomy extends EduardPlugin {
 
     }
 
+    public void saveAccount(FakePlayer player) {
+        PlayerEconomyAccount account = manager.getAccount(player);
+        manager.removeAccount(account);
+        getSqlManager().updateData(account);
+    }
 }

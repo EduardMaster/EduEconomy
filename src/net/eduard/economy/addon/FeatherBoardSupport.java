@@ -1,16 +1,21 @@
 package net.eduard.economy.addon;
 
+/*
 import be.maximvdw.featherboard.api.PlaceholderAPI;
 import be.maximvdw.featherboard.api.PlaceholderAPI.PlaceholderRequestEvent;
 import be.maximvdw.featherboard.api.PlaceholderAPI.PlaceholderRequestEventHandler;
+
+
 import net.eduard.api.lib.modules.Extra;
-import net.eduard.api.lib.player.FakePlayer;
+import net.eduard.api.lib.game.FakePlayer;
 import net.eduard.economy.EduEconomy;
+*/
 
 @SuppressWarnings("deprecation")
 public class FeatherBoardSupport {
 
 	public FeatherBoardSupport() {
+/*
 		PlaceholderAPI.registerPlaceholder("dinheiro", new PlaceholderRequestEventHandler() {
 
 			@Override
@@ -30,6 +35,9 @@ public class FeatherBoardSupport {
 				return "0";
 			}
 		});
+
+
+ */
 	}
 
 }
