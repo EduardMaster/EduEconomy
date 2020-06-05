@@ -19,7 +19,7 @@ public class MoneyEvents extends EventsManager {
 
     @EventHandler
     public void event(PlayerJoinEvent e) {
-        EduEconomy.getInstance().createAccountIfNotExists(new FakePlayer(e.getPlayer()));
+
 
     }
     @EventHandler
