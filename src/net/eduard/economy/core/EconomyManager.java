@@ -25,7 +25,7 @@ public class EconomyManager extends CurrencyManager {
             }
 
             account = newAccount;
-            if (EduEconomy.getInstance().getDB().hasConnection()) {
+            if (EduEconomy.getInstance().getDbManager().hasConnection()) {
                 EduEconomy.getInstance().getSqlManager().insertData(account);
             }
 

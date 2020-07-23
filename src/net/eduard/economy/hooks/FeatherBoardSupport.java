@@ -1,4 +1,4 @@
-package net.eduard.economy.addon;
+package net.eduard.economy.hooks;
 
 /*
 import be.maximvdw.featherboard.api.PlaceholderAPI;

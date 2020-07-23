@@ -18,40 +18,32 @@ import net.eduard.api.lib.game.FakePlayer;
 
 public class EconomyTopCommand extends CommandManager {
 
-	public EconomyTopCommand() {
-		super("top", "rank");
-		setDescription("Verificar o top de dinheiro");
-	}
+    public EconomyTopCommand() {
+        super("top", "rank");
+        setDescription("Verificar o top de dinheiro");
+    }
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        show(sender);
+        return true;
+    }
 
-		new BukkitRunnable() {
+    public void show(CommandSender sender) {
+        Map<FakePlayer, Double> currency = EduEconomy.getInstance().getManager().getCurrency();
+        Stream<Entry<FakePlayer, Double>> streamOrdenada = currency.entrySet().stream()
+                .sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))
+                .limit(EduEconomy.getInstance().getMessages().getInt("top-size"));
+        List<Entry<FakePlayer, Double>> lista = streamOrdenada.collect(Collectors.toList());
+        sender.sendMessage(EduEconomy.getInstance().getMessages().message("top-format-header"));
+        int posicao = 1;
+        for (Entry<FakePlayer, Double> entrada : lista) {
+            sender.sendMessage(EduEconomy.getInstance().getMessages().message("top-format")
+                    .replace("$player", entrada.getKey().getName())
+                    .replace("$amount", Extra.formatMoney(entrada.getValue())).replace("$position", "" + posicao));
+            posicao++;
+        }
 
-			@Override
-			public void run() {
-				show(sender);
-			}
-		}.runTaskAsynchronously(getPluginInstance());
-
-		return true;
-	}
-
-	public void show(CommandSender sender) {
-		Map<FakePlayer, Double> currency = EduEconomy.getInstance().getManager().getCurrency();
-		Stream<Entry<FakePlayer, Double>> streamOrdenada = currency.entrySet().stream()
-				.sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))
-				.limit(EduEconomy.getInstance().getMessages().getInt("top-size"));
-		List<Entry<FakePlayer, Double>> lista = streamOrdenada.collect(Collectors.toList());
-		sender.sendMessage(EduEconomy.getInstance().getMessages().message("top-format-header"));
-		int posicao = 1;
-		for (Entry<FakePlayer, Double> entrada : lista) {
-			sender.sendMessage(EduEconomy.getInstance().getMessages().message("top-format")
-					.replace("$player", entrada.getKey().getName())
-					.replace("$amount", Extra.formatMoney(entrada.getValue())).replace("$position", "" + posicao));
-			posicao++;
-		}
-		
-	}
+    }
 
 }

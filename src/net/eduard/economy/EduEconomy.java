@@ -13,11 +13,10 @@ import net.eduard.api.server.EduardPlugin;
 import net.eduard.economy.command.EconomyCommand;
 import net.eduard.economy.listener.MoneyEvents;
 import net.eduard.economy.core.EconomyManager;
-import net.eduard.economy.addon.FeatherBoardSupport;
+import net.eduard.economy.hooks.FeatherBoardSupport;
 import net.eduard.economy.core.VaultSupport;
 import net.milkbowl.vault.economy.Economy;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class EduEconomy extends EduardPlugin {
@@ -39,6 +38,8 @@ public class EduEconomy extends EduardPlugin {
         setFree(true);
         super.onEnable();
         instance = this;
+
+
 
         new MoneyEvents().register(this);
         new EconomyCommand().register();
@@ -65,7 +66,7 @@ public class EduEconomy extends EduardPlugin {
             getStorage().set("economy", manager);
             getStorage().saveConfig();
             manager.setSaving(true);
-            if (EduEconomy.getInstance().getDB().hasConnection()) {
+            if (EduEconomy.getInstance().getDbManager().hasConnection()) {
                 for (PlayerEconomyAccount account : EduEconomy.getInstance().getManager().getAccounts()) {
                     if (account.needUpdate()) {
                         account.setNeedUpdate(false);
@@ -86,17 +87,17 @@ public class EduEconomy extends EduardPlugin {
         getMessages().reloadConfig();
         getStorage().reloadConfig();
         if (getStorage().contains("economy")) {
-            manager = storage.get("economy", EconomyManager.class) ;
+            manager = getStorage().get("economy", EconomyManager.class) ;
         } else {
             manager = new EconomyManager();
             save();
         }
-        if (getDB().isEnabled())
+        if (getDbManager().isEnabled())
         {
 
-            getDB().openConnection();
-            if (getDB().hasConnection()){
-                startSQLManager();
+            getDbManager().openConnection();
+            if (getDbManager().hasConnection()){
+
                 getSqlManager().createTable(PlayerEconomyAccount.class);
                 manager.clearAccounts();
                 List<PlayerEconomyAccount> accounts = getSqlManager().getAllData(PlayerEconomyAccount.class);
@@ -119,7 +120,7 @@ public class EduEconomy extends EduardPlugin {
     }
 
     public void saveAccount(FakePlayer player) {
-        if (getDB().hasConnection()) {
+        if (getDbManager().hasConnection()) {
             PlayerEconomyAccount account = manager.getAccount(player);
             getSqlManager().updateData(account);
             account.setNeedUpdate(false);

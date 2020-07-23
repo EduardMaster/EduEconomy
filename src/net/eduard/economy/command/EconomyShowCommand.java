@@ -20,7 +20,7 @@ public class EconomyShowCommand extends CommandManager {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if (args.length == 0) {
+		if (args.length < 2) {
 			sendUsage(sender);
 		} else {
 			String jogador = args[1];
