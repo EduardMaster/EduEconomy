@@ -10,11 +10,10 @@ import java.util.stream.Stream;
 import net.eduard.economy.EduEconomy;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
-import net.eduard.api.lib.game.FakePlayer;
+import net.eduard.api.lib.modules.FakePlayer;
 
 public class EconomyTopCommand extends CommandManager {
 

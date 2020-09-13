@@ -3,7 +3,7 @@ package net.eduard.economy.core;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import net.eduard.api.lib.game.FakePlayer;
+import net.eduard.api.lib.modules.FakePlayer;
 import net.eduard.economy.EduEconomy;
 import org.bukkit.OfflinePlayer;
 

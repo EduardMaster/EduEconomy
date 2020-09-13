@@ -1,7 +1,7 @@
 
 package net.eduard.economy.listener;
 
-import net.eduard.api.lib.game.FakePlayer;
+import net.eduard.api.lib.modules.FakePlayer;
 import net.eduard.economy.EduEconomy;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;

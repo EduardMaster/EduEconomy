@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import net.eduard.api.lib.modules.Mine;
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
-import net.eduard.api.lib.game.FakePlayer;
+import net.eduard.api.lib.modules.FakePlayer;
 
 public class EconomyPayCommand extends CommandManager {
 

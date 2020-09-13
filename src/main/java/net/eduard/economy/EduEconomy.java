@@ -1,7 +1,7 @@
 
 package net.eduard.economy;
 
-import net.eduard.api.lib.game.FakePlayer;
+import net.eduard.api.lib.modules.FakePlayer;
 import net.eduard.economy.core.PlayerEconomyAccount;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;

@@ -1,6 +1,6 @@
 package net.eduard.economy.core;
 
-import net.eduard.api.lib.game.FakePlayer;
+import net.eduard.api.lib.modules.FakePlayer;
 import net.eduard.api.lib.manager.CurrencyManager;
 import net.eduard.economy.EduEconomy;
 
