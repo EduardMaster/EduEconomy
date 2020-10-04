@@ -29,7 +29,7 @@ public class EconomyAddCommand extends CommandManager {
 
 			EduEconomy.getInstance().getManager().addCoins(fakeplayer, amount);
 			if (args.length >= 4){
-				if (args[3] ==("-msg")){
+				if (args[3].equals("-msg")){
 					return true;
 				}
 			}
