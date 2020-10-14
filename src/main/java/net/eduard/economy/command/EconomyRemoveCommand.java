@@ -32,7 +32,7 @@ public class EconomyRemoveCommand extends CommandManager {
 				}
 			}
 			sender.sendMessage(EduEconomy.getInstance().message("money-remove").replace("$player", fakeplayer.getName())
-					.replace("$amount", Extra.formatMoney(Extra.toDouble(args[2]))));
+					.replace("$amount", Extra.formatMoney(valor)));
 			if (fakeplayer.getPlayer() != null) {
 				fakeplayer.getPlayer()
 						.sendMessage(EduEconomy.getInstance().message("money-changed").replace("$player", sender.getName()));
