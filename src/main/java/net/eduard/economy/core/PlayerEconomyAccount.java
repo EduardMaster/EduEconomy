@@ -14,16 +14,16 @@ public class PlayerEconomyAccount {
     @ColumnName("name")
     private String playerName;
     private double amount;
-    transient boolean needUpdate;
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PlayerEconomyAccount account = (PlayerEconomyAccount) o;
-        return Double.compare(account.amount, amount) == 0 &&
-                Objects.equals(playerName, account.playerName);
+
+        PlayerEconomyAccount that = (PlayerEconomyAccount) o;
+
+        return playerName.equalsIgnoreCase(that.playerName);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class PlayerEconomyAccount {
 
     public void setAmount(double amount) {
         this.amount = amount;
-        needUpdate = true;
+
     }
 
     public String getPlayerName() {
@@ -56,11 +56,5 @@ public class PlayerEconomyAccount {
         setAmount(getAmount() + amount);
     }
 
-    public boolean needUpdate() {
-        return needUpdate;
-    }
 
-    public void setNeedUpdate(boolean update) {
-        needUpdate = update;
-    }
 }

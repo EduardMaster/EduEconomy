@@ -31,7 +31,7 @@ public class EconomyPayCommand extends CommandManager {
                 String alvonome = args[1];
                 FakePlayer alvoConta = new FakePlayer(alvonome);
                 FakePlayer playerConta = new FakePlayer(p);
-                Double quantidade = Extra.fromMoneyToDouble(args[2]);
+                double quantidade = Extra.fromMoneyToDouble(args[2]);
                 quantidade = Math.abs(quantidade);
 
 

@@ -4,33 +4,46 @@ import net.eduard.api.lib.modules.FakePlayer;
 import net.eduard.api.lib.manager.CurrencyManager;
 import net.eduard.economy.EduEconomy;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class EconomyManager extends CurrencyManager {
 
-    volatile transient boolean saving = false;
 
-    transient private Map<FakePlayer, PlayerEconomyAccount> accounts = new HashMap<>();
+    private List<PlayerEconomyAccount> top = new LinkedList();
+
+    public List<PlayerEconomyAccount> getTop() {
+        return top;
+    }
+
+    public Map<FakePlayer, PlayerEconomyAccount> getAccounts() {
+        return accounts;
+    }
+
+    final transient private Map<FakePlayer, PlayerEconomyAccount> accounts = new HashMap<>();
+
+
+
 
     public PlayerEconomyAccount getAccount(FakePlayer player) {
         PlayerEconomyAccount account = accounts.get(player);
         if (account == null) {
-            PlayerEconomyAccount newAccount = new PlayerEconomyAccount();
-            newAccount.setAmount(getInicialAmount());
-            newAccount.setPlayerName(player.getName());
-            if (!saving) {
-                accounts.put(player, newAccount);
-            }
+            account = new PlayerEconomyAccount();
+            account.setAmount(getInicialAmount());
+            account.setPlayerName(player.getName());
 
-            account = newAccount;
-            if (EduEconomy.getInstance().getDbManager().hasConnection()) {
-                EduEconomy.getInstance().getSqlManager().insertData(account);
-            }
+            EduEconomy.getInstance().getSqlManager().insertData(account);
+
 
         }
         return account;
+    }
+
+    public void reloadTop(){
+        top = accounts.values().stream().sorted((c1,c2) ->
+                Double.compare(c2.getAmount() , c1.getAmount()))
+                .collect(Collectors.toList());
+
     }
 
 
@@ -67,14 +80,7 @@ public class EconomyManager extends CurrencyManager {
 
     public void removeAccount(PlayerEconomyAccount account) {
         accounts.remove(account);
-    }
 
-    public Collection<PlayerEconomyAccount> getAccounts() {
-        return accounts.values();
-    }
-
-    public Map<FakePlayer, PlayerEconomyAccount> getAccountsMap() {
-        return accounts;
     }
 
     public void clearAccounts() {
@@ -82,8 +88,5 @@ public class EconomyManager extends CurrencyManager {
         getCurrency().clear();
     }
 
-    public void setSaving(boolean saving) {
-        this.saving = saving;
-    }
 
 }

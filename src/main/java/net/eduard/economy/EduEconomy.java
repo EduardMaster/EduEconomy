@@ -8,7 +8,6 @@ import org.bukkit.plugin.ServicePriority;
 
 import net.eduard.api.lib.modules.Mine;
 import net.eduard.api.lib.modules.VaultAPI;
-import net.eduard.api.lib.storage.StorageAPI;
 import net.eduard.api.server.EduardPlugin;
 import net.eduard.economy.command.EconomyCommand;
 import net.eduard.economy.listener.MoneyEvents;
@@ -40,7 +39,6 @@ public class EduEconomy extends EduardPlugin {
         instance = this;
 
 
-
         new MoneyEvents().register(this);
         new EconomyCommand().register();
 
@@ -54,76 +52,48 @@ public class EduEconomy extends EduardPlugin {
         }
 
 
-        StorageAPI.autoRegisterClass(EconomyManager.class);
         reload();
-
 
 
     }
 
     public void save() {
-        if (manager != null) {
-            getStorage().set("economy", manager);
-            getStorage().saveConfig();
-            manager.setSaving(true);
-            if (EduEconomy.getInstance().getDbManager().hasConnection()) {
-                for (PlayerEconomyAccount account : EduEconomy.getInstance().getManager().getAccounts()) {
-                    if (account.needUpdate()) {
-                        account.setNeedUpdate(false);
-                        EduEconomy.getInstance().getSqlManager().updateData(account);
-
-                    }
-                }
-            }
-            manager.setSaving(false);
+        if (getStorageManager().getType().isSQL()){
+           manager.getCurrency().clear();
         }
+        getStorage().set("economy", manager);
+        getStorage().saveConfig();
     }
 
     public void reload() {
-        if (manager != null) {
-            unregisterServices();
-        }
+
         getConfigs().reloadConfig();
         getMessages().reloadConfig();
         getStorage().reloadConfig();
         if (getStorage().contains("economy")) {
-            manager = getStorage().get("economy", EconomyManager.class) ;
+            manager = getStorage().get("economy", EconomyManager.class);
         } else {
             manager = new EconomyManager();
             save();
         }
-        if (getDbManager().isEnabled())
-        {
-
-            getDbManager().openConnection();
-            if (getDbManager().hasConnection()){
-
-                getSqlManager().createTable(PlayerEconomyAccount.class);
-                manager.clearAccounts();
-                List<PlayerEconomyAccount> accounts = getSqlManager().getAllData(PlayerEconomyAccount.class);
-                for (PlayerEconomyAccount account : accounts){
-                    manager.getAccountsMap().put(new FakePlayer(account.getPlayerName()),account);
-                }
-
-            }
+        Mine.console("§cAtivado "+getDbManager().isEnabled());
+        Mine.console("§cConexao "+getDbManager().getConnection());
+        getSqlManager().createTable(PlayerEconomyAccount.class);
+        List<PlayerEconomyAccount> accounts = getSqlManager().getAllData(PlayerEconomyAccount.class);
+        for (PlayerEconomyAccount account : accounts) {
+            manager.getAccounts().put(new FakePlayer(account.getPlayerName()), account);
         }
+        manager.reloadTop();
 
 
     }
+
 
     @Override
     public void onDisable() {
         save();
         super.onDisable();
-
-
     }
 
-    public void saveAccount(FakePlayer player) {
-        if (getDbManager().hasConnection()) {
-            PlayerEconomyAccount account = manager.getAccount(player);
-            getSqlManager().updateData(account);
-            account.setNeedUpdate(false);
-        }
-    }
+
 }

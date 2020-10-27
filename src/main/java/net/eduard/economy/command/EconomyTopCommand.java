@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import net.eduard.economy.EduEconomy;
+import net.eduard.economy.core.PlayerEconomyAccount;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -24,25 +25,19 @@ public class EconomyTopCommand extends CommandManager {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        show(sender);
+        int posicao = 1;
+        for (PlayerEconomyAccount conta : EduEconomy.getInstance().getManager().getTop()) {
+            String player = conta.getPlayerName();
+            double money = conta.getAmount();
+            sender.sendMessage(EduEconomy.getInstance().getMessages().message("top-format")
+                    .replace("$player", player)
+                    .replace("$amount", Extra.formatMoney(money))
+                    .replace("$position", "" + posicao));
+            posicao++;
+        }
         return true;
     }
 
-    public void show(CommandSender sender) {
-        Map<FakePlayer, Double> currency = EduEconomy.getInstance().getManager().getCurrency();
-        Stream<Entry<FakePlayer, Double>> streamOrdenada = currency.entrySet().stream()
-                .sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))
-                .limit(EduEconomy.getInstance().getMessages().getInt("top-size"));
-        List<Entry<FakePlayer, Double>> lista = streamOrdenada.collect(Collectors.toList());
-        sender.sendMessage(EduEconomy.getInstance().getMessages().message("top-format-header"));
-        int posicao = 1;
-        for (Entry<FakePlayer, Double> entrada : lista) {
-            sender.sendMessage(EduEconomy.getInstance().getMessages().message("top-format")
-                    .replace("$player", entrada.getKey().getName())
-                    .replace("$amount", Extra.formatMoney(entrada.getValue())).replace("$position", "" + posicao));
-            posicao++;
-        }
 
-    }
 
 }

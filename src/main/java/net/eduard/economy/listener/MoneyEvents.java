@@ -1,8 +1,6 @@
 
 package net.eduard.economy.listener;
 
-import net.eduard.api.lib.modules.FakePlayer;
-import net.eduard.economy.EduEconomy;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -24,7 +22,7 @@ public class MoneyEvents extends EventsManager {
     }
     @EventHandler
     public void event(PlayerQuitEvent e) {
-        EduEconomy.getInstance().saveAccount(new FakePlayer(e.getPlayer()));
+
 
     }
 

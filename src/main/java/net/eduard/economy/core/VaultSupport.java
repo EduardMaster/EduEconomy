@@ -181,23 +181,19 @@ public class VaultSupport implements Economy {
 	}
 
 	public EconomyResponse isBankMember(String bankName, String playerName) {
-		EconomyResponse res = new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
-		return res;
+		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
 	}
 
 	public EconomyResponse isBankMember(String bankName, OfflinePlayer player) {
-		EconomyResponse res = new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
-		return res;
+		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
 	}
 
 	public EconomyResponse isBankOwner(String bankName, String playerName) {
-		EconomyResponse res = new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
-		return res;
+		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
 	}
 
 	public EconomyResponse isBankOwner(String bankName, OfflinePlayer player) {
-		EconomyResponse res = new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
-		return res;
+		return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, null);
 	}
 
 	public boolean isEnabled() {

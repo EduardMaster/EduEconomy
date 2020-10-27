@@ -25,18 +25,19 @@ public class EconomySetCommand extends CommandManager {
 			FakePlayer fakeplayer = new FakePlayer(args[1]);
 			Double valor = Extra.fromMoneyToDouble(args[2]);
 			valor = Math.abs(valor);
-			EduEconomy.getInstance().getManager().setBalance(fakeplayer, valor);
+			EduEconomy.getInstance().getManager().setCoins(fakeplayer, valor);
 			if (args.length >= 4){
 				if (args[3] ==("-msg")){
 					return true;
 				}
 			}
-			sender.sendMessage(EduEconomy.getInstance().message("money-set").replace("$player", fakeplayer.getName())
+			sender.sendMessage(EduEconomy.getInstance().message("money-set")
+					.replace("$player", fakeplayer.getName())
 					.replace("$amount", Extra.formatMoney(valor)));
-			if (fakeplayer.getPlayer() != null) {
-				fakeplayer.getPlayer()
+
+				fakeplayer
 						.sendMessage(EduEconomy.getInstance().message("money-changed").replace("$player", sender.getName()));
-			}
+
 		}
 
 		return true;
