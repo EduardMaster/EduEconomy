@@ -15,6 +15,7 @@ import net.eduard.economy.core.EconomyManager;
 import net.eduard.economy.hooks.FeatherBoardSupport;
 import net.eduard.economy.core.VaultSupport;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -81,9 +82,19 @@ public class EduEconomy extends EduardPlugin {
         getSqlManager().createTable(PlayerEconomyAccount.class);
         List<PlayerEconomyAccount> accounts = getSqlManager().getAllData(PlayerEconomyAccount.class);
         for (PlayerEconomyAccount account : accounts) {
-            manager.getAccounts().put(new FakePlayer(account.getPlayerName()), account);
+            FakePlayer player = new FakePlayer(account.getPlayerName());
+            manager.getAccounts().put(player, account);
+            manager.getCurrency().put(player,account.getAmount());
+            log("§aConta do "+account.getPlayerName()+ " com saldo de "+ account.getAmount());
         }
         manager.reloadTop();
+        new BukkitRunnable(){
+
+            @Override
+            public void run() {
+                getSqlManager().runUpdatesQueue();
+            }
+        }.runTaskTimerAsynchronously(this,20,20);
 
 
     }

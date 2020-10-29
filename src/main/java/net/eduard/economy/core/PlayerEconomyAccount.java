@@ -1,6 +1,7 @@
 package net.eduard.economy.core;
 
 import net.eduard.api.lib.database.annotations.*;
+import net.eduard.economy.EduEconomy;
 
 import java.util.Objects;
 
@@ -37,7 +38,7 @@ public class PlayerEconomyAccount {
 
     public void setAmount(double amount) {
         this.amount = amount;
-
+        EduEconomy.getInstance().getSqlManager().updateDataQueue(this);
     }
 
     public String getPlayerName() {
