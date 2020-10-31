@@ -1,11 +1,6 @@
 
 package net.eduard.economy.command;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import net.eduard.economy.EduEconomy;
 import net.eduard.economy.core.PlayerEconomyAccount;
@@ -14,7 +9,6 @@ import org.bukkit.command.CommandSender;
 
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
-import net.eduard.api.lib.modules.FakePlayer;
 
 public class EconomyTopCommand extends CommandManager {
 

@@ -77,15 +77,15 @@ public class EduEconomy extends EduardPlugin {
             manager = new EconomyManager();
             save();
         }
-        Mine.console("§cAtivado "+getDbManager().isEnabled());
-        Mine.console("§cConexao "+getDbManager().getConnection());
+
         getSqlManager().createTable(PlayerEconomyAccount.class);
         List<PlayerEconomyAccount> accounts = getSqlManager().getAllData(PlayerEconomyAccount.class);
         for (PlayerEconomyAccount account : accounts) {
             FakePlayer player = new FakePlayer(account.getPlayerName());
             manager.getAccounts().put(player, account);
             manager.getCurrency().put(player,account.getAmount());
-            log("§aConta do "+account.getPlayerName()+ " com saldo de "+ account.getAmount());
+            log("§aConta do "+account.getPlayerName()+ " com saldo de "+
+                    account.getAmount());
         }
         manager.reloadTop();
         new BukkitRunnable(){
