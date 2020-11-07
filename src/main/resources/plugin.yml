@@ -1,7 +1,7 @@
 name: EduEconomy
 description: Sistema de economia completo com suporte MySQ
 main: net.eduard.economy.EduEconomy
-version: ${project.version}
+version: 1.0
 author: Eduard
 authors: [Eduard]
 depend: [EduardAPI]
