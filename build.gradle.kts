@@ -11,18 +11,23 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 repositories {
     mavenCentral()
     mavenLocal()
-    maven("https://jitpack.io/")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://jitpack.io/")
 }
+
 
 dependencies {
 
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
-    compileOnly("net.eduard:eduardapi:1.0-SNAPSHOT")
+    implementation("net.eduard:eduardapi:1.0-SNAPSHOT")
+    implementation("net.eduard:modules:1.0-SNAPSHOT")
+    implementation("net.eduard:sqlmanager:1.0-SNAPSHOT")
+    implementation("net.eduard.abstraction:complete:1.0-SNAPSHOT")
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     compileOnly(kotlin("stdlib-jdk8"))
     testCompile("junit", "junit", "4.12")
 }
+
 tasks.withType<Jar>{
     destinationDir = file("E:\\Tudo\\Minecraft - Server\\Servidor Teste\\plugins\\")
 
