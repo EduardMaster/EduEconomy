@@ -1,7 +1,7 @@
 plugins {
     java
     kotlin("jvm") version "1.3.72"
-    `maven-publish`
+
 }
 
 group = "net.eduard"
@@ -45,16 +45,4 @@ tasks {
 }
 tasks.withType<JavaCompile>{
     options.encoding = "UTF-8"
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("EduEconomy") {
-            groupId = "net.eduard"
-            artifactId = "economy"
-            version = project.version as String
-
-            from(components["java"])
-        }
-    }
 }
