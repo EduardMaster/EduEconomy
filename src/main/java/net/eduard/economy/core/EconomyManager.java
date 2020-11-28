@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class EconomyManager extends CurrencyManager {
 
 
-    private List<PlayerEconomyAccount> top = new LinkedList();
+    private List<PlayerEconomyAccount> top = new LinkedList<>();
 
     public List<PlayerEconomyAccount> getTop() {
         return top;
@@ -21,8 +21,6 @@ public class EconomyManager extends CurrencyManager {
     }
 
     final transient private Map<FakePlayer, PlayerEconomyAccount> accounts = new HashMap<>();
-
-
 
 
     public PlayerEconomyAccount getAccount(FakePlayer player) {
