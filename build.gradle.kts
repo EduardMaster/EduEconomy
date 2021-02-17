@@ -1,6 +1,6 @@
 plugins {
     java
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "1.4.21"
 
 }
 
@@ -27,8 +27,6 @@ dependencies {
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 tasks.withType<Jar>{
     destinationDir = file("E:\\Tudo\\Minecraft - Server\\Servidor Teste\\plugins\\")
-
-
 }
 tasks.withType<JavaCompile>{
     options.encoding = "UTF-8"
@@ -36,13 +34,9 @@ tasks.withType<JavaCompile>{
 tasks {
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
-
     }
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
-
     }
-
-
 }
 
