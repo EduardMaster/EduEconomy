@@ -1,2 +1,2 @@
-rootProject.name = "economy"
+rootProject.name = "EduEconomy"
 

@@ -9,6 +9,8 @@ import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
 import net.eduard.api.lib.modules.FakePlayer;
 
+
+
 public class EconomyAddCommand extends CommandManager {
 
     public EconomyAddCommand() {

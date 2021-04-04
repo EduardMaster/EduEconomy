@@ -17,7 +17,6 @@ repositories {
 
 
 dependencies {
-
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
     compileOnly("net.eduard:eduardapi:1.0-SNAPSHOT")
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
@@ -25,13 +24,16 @@ dependencies {
 
 }
 java.sourceCompatibility = JavaVersion.VERSION_1_8
-tasks.withType<Jar>{
-    destinationDir = file("E:\\Tudo\\Minecraft - Server\\Servidor Teste\\plugins\\")
-}
-tasks.withType<JavaCompile>{
-    options.encoding = "UTF-8"
-}
+java.targetCompatibility = JavaVersion.VERSION_1_8
+
+
 tasks {
+    jar{
+        destinationDirectory.set(file("E:\\Tudo\\Minecraft - Server\\Servidor Teste\\plugins\\"))
+    }
+    compileJava{
+        options.encoding = "UTF-8"
+    }
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }

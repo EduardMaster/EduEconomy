@@ -1,4 +1,3 @@
-
 package net.eduard.economy.command;
 
 import org.bukkit.command.Command;
