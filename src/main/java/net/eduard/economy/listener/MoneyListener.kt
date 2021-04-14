@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerQuitEvent
 
-class MoneyEvents : EventsManager() {
+class MoneyListener : EventsManager() {
     @EventHandler
     fun event(e: PlayerMoveEvent?) {
     }

@@ -4,8 +4,8 @@ plugins {
 
 }
 
-group = "net.eduard"
-version = "1.0-SNAPSHOT"
+group = "net.eduard.plugins"
+version = "1.0"
 
 
 repositories {
