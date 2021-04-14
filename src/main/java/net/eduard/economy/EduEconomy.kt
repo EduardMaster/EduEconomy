@@ -1,5 +1,6 @@
 package net.eduard.economy
 
+import net.eduard.api.lib.kotlin.format
 import net.eduard.api.server.EduardPlugin
 import net.eduard.api.lib.modules.Mine
 import net.eduard.api.lib.modules.VaultAPI
@@ -77,7 +78,7 @@ class EduEconomy : EduardPlugin() {
             val users = sqlManager.getAllData(EconomyUser::class.java)
             for (account in users) {
                 manager.users.put(account.player, account)
-                log("§aConta do " + account.name.toString() + " com saldo de " + account.amount
+                log("Conta §a" + account.name.toString() + " §f-> §2" + account.amount.format()
                 )
             }
             manager.reloadTop()
