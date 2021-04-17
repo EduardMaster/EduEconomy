@@ -24,13 +24,13 @@ public class EconomyPayCommand extends CommandManager {
 
         if (Mine.onlyPlayer(sender)) {
             Player p = (Player) sender;
-            if (args.length < 3) {
+            if (args.length < 2) {
                 sendUsage(sender);
             } else {
-                String alvonome = args[1];
+                String alvonome = args[0];
                 FakePlayer alvoConta = new FakePlayer(alvonome);
                 FakePlayer playerConta = new FakePlayer(p);
-                double quantidade = Extra.fromMoneyToDouble(args[2]);
+                double quantidade = Extra.fromMoneyToDouble(args[1]);
                 quantidade = Math.abs(quantidade);
 
 

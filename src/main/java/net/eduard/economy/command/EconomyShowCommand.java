@@ -19,10 +19,10 @@ public class EconomyShowCommand extends CommandManager {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if (args.length < 2) {
+		if (args.length < 1) {
 			sendUsage(sender);
 		} else {
-			String jogador = args[1];
+			String jogador = args[0];
 			FakePlayer fake = new FakePlayer(jogador);
 			String quantidade = Extra.formatMoney(EduEconomy.getInstance()
 					.getManager().getCoins(fake));

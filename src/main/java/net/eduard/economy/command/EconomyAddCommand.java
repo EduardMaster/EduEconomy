@@ -21,17 +21,17 @@ public class EconomyAddCommand extends CommandManager {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length < 3) {
+        if (args.length < 2) {
             sendUsage(sender);
         } else {
-            FakePlayer fakeplayer = new FakePlayer(args[1]);
-            double amount = Extra.fromMoneyToDouble(args[2]);
+            FakePlayer fakeplayer = new FakePlayer(args[0]);
+            double amount = Extra.fromMoneyToDouble(args[1]);
             amount = Math.abs(amount);
 
 
             EduEconomy.getInstance().getManager().addCoins(fakeplayer, amount);
-            if (args.length >= 4) {
-                if (args[3].equals("-msg")) {
+            if (args.length >= 3) {
+                if (args[2].equals("-msg")) {
                     return true;
                 }
             }

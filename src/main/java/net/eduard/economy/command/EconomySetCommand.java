@@ -18,15 +18,15 @@ public class EconomySetCommand extends CommandManager {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if (args.length < 3) {
+		if (args.length < 2) {
 			sendUsage(sender);
 		} else {
-			FakePlayer fakeplayer = new FakePlayer(args[1]);
-			Double valor = Extra.fromMoneyToDouble(args[2]);
+			FakePlayer fakeplayer = new FakePlayer(args[0]);
+			Double valor = Extra.fromMoneyToDouble(args[1]);
 			valor = Math.abs(valor);
 			EduEconomy.getInstance().getManager().setCoins(fakeplayer, valor);
-			if (args.length >= 4){
-				if (args[3] ==("-msg")){
+			if (args.length >= 3){
+				if (args[2] ==("-msg")){
 					return true;
 				}
 			}
