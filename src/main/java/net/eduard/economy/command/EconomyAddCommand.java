@@ -35,11 +35,13 @@ public class EconomyAddCommand extends CommandManager {
                     return true;
                 }
             }
-            sender.sendMessage(EduEconomy.getInstance().message("money-add").replace("$player", fakeplayer.getName())
-                    .replace("$amount", Extra.formatMoney(amount)));
+            sender.sendMessage(EduEconomy.getInstance().message("money-add")
+                    .replace("%player", fakeplayer.getName())
+                    .replace("%amount", Extra.formatMoney(amount)));
 
             fakeplayer.sendMessage(
-                    EduEconomy.getInstance().message("money-changed").replace("$player", sender.getName()));
+                    EduEconomy.getInstance().message("money-changed")
+                            .replace("%player", sender.getName()));
 
         }
 

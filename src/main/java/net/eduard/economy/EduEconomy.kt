@@ -30,9 +30,9 @@ class EduEconomy : EduardPlugin() {
             log("Ativando suporte ao 'FeatherBoard' variavel %money")
 
         }
-       syncTimer(60*20,60*20){
-           manager.reloadTop()
-       }
+        syncTimer(60 * 20, 60 * 20) {
+            manager.reloadTop()
+        }
 
 
     }
@@ -48,16 +48,17 @@ class EduEconomy : EduardPlugin() {
         configs.reloadConfig()
         messages.reloadConfig()
         storage.reloadConfig()
-        messages.add("money-add","&aVocê adiciou %amount de dinheiro para o jogador %player")
-        messages.add("money-add-player" , "&aFoi adicionado ao seu banco %amount pelo Jogador %player")
+        messages.add("cant-pay-self", "&cVocê não pode enviar dinheiro para sí próprio.");
+        messages.add("money-add", "&aVocê adiciou %amount de dinheiro para o jogador %player")
+        messages.add("money-add-player", "&aFoi adicionado ao seu banco %amount pelo Jogador %player")
         messages.add("money-set", "&aVocê definiu %amount de dinheiro para o jogador %player")
-        messages.add("money-remove" , "&aVocê remevou %amount de dinheiro para o jogador %player")
+        messages.add("money-remove", "&aVocê remevou %amount de dinheiro para o jogador %player")
         messages.add("money-check", "&aSeu dinheiro é %amount")
         messages.add("money-changed", "&aSeu dinheiro foi atualizado pelo jogador %player")
-        messages.add("money-need" , "§cDinheiro insuficiente para poder pagar outro jogador.")
+        messages.add("money-need", "§cDinheiro insuficiente para poder pagar outro jogador.")
         messages.add("money-pay", "§aVocê pagou %amount para o %player")
         messages.add("money-player-check", "§aO dinheiro do jogador %player é %amount")
-        messages.add("top-format-header","&a&lRank de Dinheiro" )
+        messages.add("top-format-header", "&a&lRank de Dinheiro")
         messages.add("top-format", "&b%positionº &f%player: &a%amount")
         messages.add("top-size", 10)
         messages.saveConfig()
@@ -78,7 +79,8 @@ class EduEconomy : EduardPlugin() {
             val users = sqlManager.getAllData(EconomyUser::class.java)
             for (account in users) {
                 manager.users.put(account.player, account)
-                log("Conta §a" + account.name.toString() + " §f-> §2" + account.amount.format()
+                log(
+                    "Conta §a" + account.name.toString() + " §f-> §2" + account.amount.format()
                 )
             }
             manager.reloadTop()

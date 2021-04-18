@@ -15,7 +15,7 @@ class EconomyCommand : CommandManager("money") {
                 val player = sender
                 player.sendMessage(
                     EduEconomy.instance.message("money-check").replace(
-                        "\$amount",
+                        "%amount",
                         "" + Extra.formatMoney( EduEconomy.instance.
                         manager.getCoins(FakePlayer(player)))
                     )

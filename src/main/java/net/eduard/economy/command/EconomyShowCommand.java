@@ -13,7 +13,7 @@ public class EconomyShowCommand extends CommandManager {
 	public EconomyShowCommand() {
 		super("show", "ver", "checar", "check");
 		setDescription("Ver o dinheiro de outro jogador");
-		setUsage("/economy ver <jogador>");
+		setUsage("/money ver <jogador>");
 
 	}
 
@@ -26,9 +26,10 @@ public class EconomyShowCommand extends CommandManager {
 			FakePlayer fake = new FakePlayer(jogador);
 			String quantidade = Extra.formatMoney(EduEconomy.getInstance()
 					.getManager().getCoins(fake));
-			sender.sendMessage(EduEconomy.getInstance().message("money-player-check").
-					replace("$amount",quantidade).
-					replace("$player",jogador));
+			sender.sendMessage(EduEconomy.getInstance()
+					.message("money-player-check").
+					replace("%amount",quantidade).
+					replace("%player",jogador));
 
 
 		}

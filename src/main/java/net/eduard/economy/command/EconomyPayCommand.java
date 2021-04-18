@@ -9,6 +9,7 @@ import net.eduard.api.lib.modules.Mine;
 import net.eduard.api.lib.manager.CommandManager;
 import net.eduard.api.lib.modules.Extra;
 import net.eduard.api.lib.modules.FakePlayer;
+import org.jetbrains.annotations.NotNull;
 
 public class EconomyPayCommand extends CommandManager {
 
@@ -20,35 +21,33 @@ public class EconomyPayCommand extends CommandManager {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (Mine.onlyPlayer(sender)) {
-            Player p = (Player) sender;
-            if (args.length < 2) {
-                sendUsage(sender);
-            } else {
-                String alvonome = args[0];
-                FakePlayer alvoConta = new FakePlayer(alvonome);
-                FakePlayer playerConta = new FakePlayer(p);
-                double quantidade = Extra.fromMoneyToDouble(args[1]);
-                quantidade = Math.abs(quantidade);
-
-
-                if (EduEconomy.getInstance().getManager().hasCoins(playerConta, quantidade)) {
-                    EduEconomy.getInstance().getManager().addCoins(alvoConta, quantidade);
-                    EduEconomy.getInstance().getManager().removeCoins(playerConta, quantidade);
-                    sender.sendMessage(EduEconomy.getInstance().message("money-pay").
-                            replace("$amount",Extra.formatMoney(quantidade)).
-                            replace("$player",alvonome));
-
-                } else {
-                    sender.sendMessage(EduEconomy.getInstance().message("money-need"));
-                }
-
-
-            }
+    public void playerCommand(@NotNull Player player, @NotNull String[] args) {
+        if (args.length < 2) {
+            sendUsage(player);
+            return;
         }
-        return true;
+        String alvonome = args[0];
+        FakePlayer alvoConta = new FakePlayer(alvonome);
+        FakePlayer playerConta = new FakePlayer(player);
+        double quantidade = Extra.fromMoneyToDouble(args[1]);
+        quantidade = Math.abs(quantidade);
+        if (alvoConta.equals(playerConta)) {
+            player.sendMessage(EduEconomy.getInstance().message("cant-pay-self"));
+            return;
+        }
+        if (EduEconomy.getInstance().getManager().hasCoins(playerConta, quantidade)) {
+            EduEconomy.getInstance().getManager().addCoins(alvoConta, quantidade);
+            EduEconomy.getInstance().getManager().removeCoins(playerConta, quantidade);
+            player.sendMessage(EduEconomy.getInstance().message("money-pay").
+                    replace("%amount", Extra.formatMoney(quantidade)).
+                    replace("%player", alvonome));
+
+        } else {
+            player.sendMessage(EduEconomy.getInstance().message("money-need"));
+        }
+
+
     }
+
 
 }

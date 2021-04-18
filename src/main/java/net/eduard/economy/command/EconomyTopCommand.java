@@ -21,13 +21,12 @@ public class EconomyTopCommand extends CommandManager {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         int posicao = 1;
         for (EconomyUser conta : EduEconomy.getInstance().getManager().getTop()) {
-
             String player = conta.getName();
             double money = conta.getAmount();
             sender.sendMessage(EduEconomy.getInstance().getMessages().message("top-format")
-                    .replace("$player", player)
-                    .replace("$amount", Extra.formatMoney(money))
-                    .replace("$position", "" + posicao));
+                    .replace("%player", player)
+                    .replace("%amount", Extra.formatMoney(money))
+                    .replace("%position", "" + posicao));
             posicao++;
         }
         return true;
