@@ -1,8 +1,10 @@
 package net.eduard.economy.core
 
+import net.eduard.api.lib.kotlin.format
 import net.eduard.api.server.currency.CurrencyManager
 import net.eduard.api.lib.modules.FakePlayer
 import net.eduard.economy.EduEconomy
+
 
 class EconomyManager : CurrencyManager() {
 
@@ -12,13 +14,13 @@ class EconomyManager : CurrencyManager() {
     val users = mutableMapOf<FakePlayer, EconomyUser>()
 
     fun getAccount(player: FakePlayer): EconomyUser {
-        var account: EconomyUser? = users[player]
+        var account = users[player]
         if (account == null) {
             account = EconomyUser()
             account.amount = inicialAmount.toDouble()
             account.player = player
             users[player] = account
-            EduEconomy.instance.sqlManager.insertData(account)
+            EduEconomy.instance.sqlManager.insertDataQueue(account)
         }
         return account
     }
@@ -26,13 +28,25 @@ class EconomyManager : CurrencyManager() {
     fun reloadTop() {
         top = users.values.sortedByDescending { it.amount }
     }
+    fun tradeCoins(fromPlayer : FakePlayer, toPlayer : FakePlayer, amount : Double){
+        val fromUser = getAccount(fromPlayer)
+        val toUser = getAccount(toPlayer)
+        toUser.addAmount(amount)
+        fromUser.removeAmount(amount)
+        fromUser.transaction("Paid ${amount.format()} to ${toPlayer.name}", -amount)
+        toUser.transaction("Received ${amount.format()} from ${fromPlayer.name}", +amount)
+    }
 
     fun addCoins(player: FakePlayer, amount: Double) {
-        getAccount(player).addAmount(amount)
+        val user = getAccount(player)
+        user.addAmount(amount)
+        user.transaction("Added ${amount.format()}" , +amount )
     }
 
     fun removeCoins(player: FakePlayer, amount: Double) {
-        getAccount(player).removeAmount(amount)
+        val user = getAccount(player)
+        user.removeAmount(amount)
+        user.transaction("Removed ${amount.format()}" , -amount )
     }
 
     fun hasCoins(player: FakePlayer, amount: Double): Boolean {
@@ -45,11 +59,14 @@ class EconomyManager : CurrencyManager() {
     }
 
     fun setCoins(player: FakePlayer, amount: Double) {
-        getAccount(player).amount = amount
+        val user = getAccount(player)
+        val dif =  amount -user.amount
+        user.amount = amount
+        user.transaction("Setted to ${amount.format()}", dif)
     }
 
     fun removeAccount(account: EconomyUser) {
-        users.remove(account)
+        users.remove(account.player)
     }
 
     fun clearAccounts() {

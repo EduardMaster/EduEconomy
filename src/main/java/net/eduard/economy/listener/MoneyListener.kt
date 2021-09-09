@@ -1,21 +1,16 @@
 package net.eduard.economy.listener
 
+import net.eduard.api.lib.kotlin.fake
 import net.eduard.api.lib.manager.EventsManager
+import net.eduard.economy.EduEconomy
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent
-import org.bukkit.event.player.PlayerMoveEvent
-import org.bukkit.event.player.PlayerQuitEvent
 
 class MoneyListener : EventsManager() {
-    @EventHandler
-    fun event(e: PlayerMoveEvent?) {
-    }
 
     @EventHandler
-    fun event(e: PlayerJoinEvent?) {
+    fun join(e : PlayerJoinEvent){
+        EduEconomy.instance.manager.getAccount(e.player.fake)
     }
 
-    @EventHandler
-    fun event(e: PlayerQuitEvent?) {
-    }
 }

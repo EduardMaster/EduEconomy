@@ -1,13 +1,9 @@
 name: EduEconomy
-description: Sistema de economia completo com suporte MySQ
+description: Sistema de economia completo com suporte MySQL
 main: net.eduard.economy.EduEconomy
 version: 1.0
 author: Eduard
 authors: [Eduard]
 depend: [EduardAPI]
 website: https://www.youtube.com/user/EduTutoriaisHD
-commands:
-  money:
-    aliases: [dinheiro]
-    usage: /<command> help
-    description: Comando Principal do Plugin
+

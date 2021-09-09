@@ -6,6 +6,7 @@ import net.eduard.api.lib.modules.Mine
 import net.eduard.api.lib.modules.VaultAPI
 import net.eduard.economy.command.EconomyCommand
 import net.eduard.economy.core.EconomyManager
+import net.eduard.economy.core.EconomyTransaction
 import net.eduard.economy.core.EconomyUser
 import net.eduard.economy.hooks.EconomyVaultSupport
 import net.eduard.economy.listener.MoneyListener
@@ -15,7 +16,6 @@ import org.bukkit.plugin.ServicePriority
 
 class EduEconomy : EduardPlugin() {
 
-
     lateinit var manager: EconomyManager
 
     override fun onEnable() {
@@ -23,14 +23,14 @@ class EduEconomy : EduardPlugin() {
         super.onEnable()
         instance = this
         MoneyListener().register(this)
-        EconomyCommand().register()
+        EconomyCommand().registerCommand(this)
         reload()
 
         if (Mine.hasPlugin("FeatherBoard")) {
             log("Ativando suporte ao 'FeatherBoard' variavel %money")
 
         }
-        syncTimer(60 * 20, 60 * 20) {
+        syncTimer(60 * 20L, 60 * 20L) {
             manager.reloadTop()
         }
 
@@ -49,7 +49,7 @@ class EduEconomy : EduardPlugin() {
         messages.reloadConfig()
         storage.reloadConfig()
         messages.add("cant-pay-self", "&cVocê não pode enviar dinheiro para sí próprio.");
-        messages.add("money-add", "&aVocê adiciou %amount de dinheiro para o jogador %player")
+        messages.add("money-add", "&aVocê adicionou %amount de dinheiro para o jogador %player")
         messages.add("money-add-player", "&aFoi adicionado ao seu banco %amount pelo Jogador %player")
         messages.add("money-set", "&aVocê definiu %amount de dinheiro para o jogador %player")
         messages.add("money-remove", "&aVocê remevou %amount de dinheiro para o jogador %player")
@@ -57,6 +57,7 @@ class EduEconomy : EduardPlugin() {
         messages.add("money-changed", "&aSeu dinheiro foi atualizado pelo jogador %player")
         messages.add("money-need", "§cDinheiro insuficiente para poder pagar outro jogador.")
         messages.add("money-pay", "§aVocê pagou %amount para o %player")
+        messages.add("money-payment" ,"§aVocê recebeu %amount do %player")
         messages.add("money-player-check", "§aO dinheiro do jogador %player é %amount")
         messages.add("top-format-header", "&a&lRank de Dinheiro")
         messages.add("top-format", "&b%positionº &f%player: &a%amount")
@@ -76,9 +77,11 @@ class EduEconomy : EduardPlugin() {
         VaultAPI.setupVault()
         if (sqlManager.hasConnection()) {
             sqlManager.createTable(EconomyUser::class.java)
+            sqlManager.createTable<EconomyTransaction>()
+            sqlManager.createReferences<EconomyTransaction>()
             val users = sqlManager.getAllData(EconomyUser::class.java)
             for (account in users) {
-                manager.users.put(account.player, account)
+                manager.users[account.player] = account
                 log(
                     "Conta §a" + account.name.toString() + " §f-> §2" + account.amount.format()
                 )
@@ -96,6 +99,8 @@ class EduEconomy : EduardPlugin() {
         @JvmStatic
         lateinit var instance: EduEconomy
     }
+
+
 
 
 }

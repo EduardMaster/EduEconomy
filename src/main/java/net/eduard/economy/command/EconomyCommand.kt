@@ -8,13 +8,14 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-class EconomyCommand : CommandManager("money") {
+class EconomyCommand : CommandManager("money","coins","coin","dinheiro") {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         if (args.isEmpty()) {
             if (sender is Player) {
                 val player = sender
                 player.sendMessage(
-                    EduEconomy.instance.message("money-check").replace(
+                    EduEconomy.instance.message("money-check")
+                        .replace(
                         "%amount",
                         "" + Extra.formatMoney( EduEconomy.instance.
                         manager.getCoins(FakePlayer(player)))

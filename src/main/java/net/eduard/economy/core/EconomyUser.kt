@@ -4,7 +4,7 @@ import net.eduard.api.lib.database.annotations.*
 import net.eduard.api.lib.modules.FakePlayer
 import net.eduard.economy.EduEconomy
 
-@TableName("money_coins")
+@TableName("economy_users")
 class EconomyUser {
     @ColumnPrimary
     var id = 0
@@ -18,6 +18,15 @@ class EconomyUser {
     set(value) {
         field=value
         EduEconomy.instance.sqlManager.updateDataQueue(this);
+    }
+
+    fun transaction(reason : String , amount : Double): EconomyTransaction {
+        val transaction = EconomyTransaction()
+        transaction.user= this
+        transaction.reason = reason
+        transaction.changed = amount
+        transaction.insertQueue()
+        return transaction
     }
 
 
@@ -40,6 +49,6 @@ class EconomyUser {
     }
 
     override fun hashCode(): Int {
-        return id
+        return id.hashCode()
     }
 }
