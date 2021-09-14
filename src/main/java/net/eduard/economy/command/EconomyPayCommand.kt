@@ -23,7 +23,7 @@ class EconomyPayCommand : CommandManager("pay", "pagar") {
             player.sendMessage(instance.message("cant-pay-self"))
             return
         }
-        if (instance.manager.hasCoins(playerConta, quantidade)) {
+        if (instance.manager.hasCoins(playerConta, quantidade,false)) {
             instance.manager.tradeCoins(playerConta, target,quantidade)
             player.sendMessage(
                 instance.message("money-pay")

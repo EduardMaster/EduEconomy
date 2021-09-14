@@ -36,5 +36,7 @@ class EconomyCommand : CommandManager("money","coins","coin","dinheiro") {
         register(EconomyPayCommand())
         register(EconomyTopCommand())
         register(EconomyShowCommand())
+        register(EconomySetBonusCommand())
+        register(EconomySetDiscontCommand())
     }
 }

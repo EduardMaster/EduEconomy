@@ -140,19 +140,19 @@ class EconomyVaultSupport : Economy {
     }
 
     override fun has(playerName: String, amount: Double): Boolean {
-        return getBalance(playerName) >= amount
+        return  EduEconomy.instance.manager.hasCoins(FakePlayer(playerName), amount)
     }
 
     override fun has(player: OfflinePlayer, amount: Double): Boolean {
-        return getBalance(player) >= amount
+        return  EduEconomy.instance.manager.hasCoins(FakePlayer(player), amount)
     }
 
     override fun has(playerName: String, worldName: String, amount: Double): Boolean {
-        return getBalance(playerName) >= amount
+        return  EduEconomy.instance.manager.hasCoins(FakePlayer(playerName), amount)
     }
 
     override fun has(player: OfflinePlayer, worldName: String, amount: Double): Boolean {
-        return getBalance(player) >= amount
+        return  EduEconomy.instance.manager.hasCoins(FakePlayer(player), amount)
     }
 
     override fun hasAccount(playerName: String): Boolean {

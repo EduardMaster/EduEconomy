@@ -19,6 +19,8 @@ class EconomyUser {
         field=value
         EduEconomy.instance.sqlManager.updateDataQueue(this);
     }
+    var bonus = 0.0
+    var discont = 0.0
 
     fun transaction(reason : String , amount : Double): EconomyTransaction {
         val transaction = EconomyTransaction()
@@ -30,13 +32,13 @@ class EconomyUser {
     }
 
 
-    fun removeAmount(quantity: Double) {
-        amount -= quantity
+    fun removeAmount(quantity: Double, disconted : Boolean=true) {
+        amount -= quantity - if (disconted)(quantity * discont)else 0.0
 
     }
 
-    fun addAmount(quantity: Double) {
-        amount += quantity
+    fun addAmount(quantity: Double, haveBonus : Boolean=true) {
+        amount += quantity + if (haveBonus)(quantity * bonus)else 0.0
 
     }
 

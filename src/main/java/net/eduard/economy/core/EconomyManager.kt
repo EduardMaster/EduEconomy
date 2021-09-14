@@ -8,6 +8,8 @@ import net.eduard.economy.EduEconomy
 
 class EconomyManager : CurrencyManager() {
 
+    var groupsBonus = mutableMapOf<String , Double>()
+    var groupsDiscont = mutableMapOf<String, Double>()
     @Transient
     var top = listOf<EconomyUser>()
     @Transient
@@ -31,8 +33,9 @@ class EconomyManager : CurrencyManager() {
     fun tradeCoins(fromPlayer : FakePlayer, toPlayer : FakePlayer, amount : Double){
         val fromUser = getAccount(fromPlayer)
         val toUser = getAccount(toPlayer)
-        toUser.addAmount(amount)
-        fromUser.removeAmount(amount)
+
+        toUser.addAmount(amount,false)
+        fromUser.removeAmount(amount,false)
         fromUser.transaction("Paid ${amount.format()} to ${toPlayer.name}", -amount)
         toUser.transaction("Received ${amount.format()} from ${fromPlayer.name}", +amount)
     }
@@ -49,8 +52,9 @@ class EconomyManager : CurrencyManager() {
         user.transaction("Removed ${amount.format()}" , -amount )
     }
 
-    fun hasCoins(player: FakePlayer, amount: Double): Boolean {
-        return getCoins(player) >= amount
+    fun hasCoins(player: FakePlayer, amount: Double, disconted: Boolean=true): Boolean {
+        val user = getAccount(player)
+        return user.amount >= (amount - if (disconted)(amount*user.discont) else 0.0)
     }
 
 

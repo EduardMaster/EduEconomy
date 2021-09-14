@@ -7,7 +7,7 @@ import net.eduard.economy.EduEconomy
 import org.bukkit.command.CommandSender
 import kotlin.math.abs
 
-class EconomySetCommand : CommandManager("set", "setar", "define", "difinir") {
+class EconomySetCommand : CommandManager("set", "setar", "difinir") {
     override fun command(sender: CommandSender, args: Array<String>) {
         if (args.size < 2) {
             sendUsage(sender)
