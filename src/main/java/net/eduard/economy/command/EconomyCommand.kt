@@ -3,7 +3,7 @@ package net.eduard.economy.command
 import net.eduard.api.lib.manager.CommandManager
 import net.eduard.api.lib.modules.Extra
 import net.eduard.api.lib.modules.FakePlayer
-import net.eduard.economy.EduEconomy
+import net.eduard.economy.EduEconomyPlugin
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -13,11 +13,12 @@ class EconomyCommand : CommandManager("money","coins","coin","dinheiro") {
         if (args.isEmpty()) {
             if (sender is Player) {
                 val player = sender
+
                 player.sendMessage(
-                    EduEconomy.instance.message("money-check")
+                    EduEconomyPlugin.instance.message("money-check")
                         .replace(
                         "%amount",
-                        "" + Extra.formatMoney( EduEconomy.instance.
+                        "" + Extra.formatMoney( EduEconomyPlugin.instance.
                         manager.getCoins(FakePlayer(player)))
                     )
                 )
@@ -30,6 +31,7 @@ class EconomyCommand : CommandManager("money","coins","coin","dinheiro") {
     init {
         register(EconomyAddCommand())
         register(EconomyHelpCommand())
+        register(EconomyInfoCommand())
         register(EconomyRemoveCommand())
         register(EconomySetCommand())
         register(EconomyReloadCommand())
@@ -37,6 +39,6 @@ class EconomyCommand : CommandManager("money","coins","coin","dinheiro") {
         register(EconomyTopCommand())
         register(EconomyShowCommand())
         register(EconomySetBonusCommand())
-        register(EconomySetDiscontCommand())
+        register(EconomySetDiscountCommand())
     }
 }

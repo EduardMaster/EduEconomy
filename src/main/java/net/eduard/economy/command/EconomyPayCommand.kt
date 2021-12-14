@@ -3,7 +3,7 @@ package net.eduard.economy.command
 import net.eduard.api.lib.manager.CommandManager
 import net.eduard.api.lib.modules.FakePlayer
 import net.eduard.api.lib.modules.Extra
-import net.eduard.economy.EduEconomy
+import net.eduard.economy.EduEconomyPlugin
 import org.bukkit.entity.Player
 import kotlin.math.abs
 
@@ -18,7 +18,7 @@ class EconomyPayCommand : CommandManager("pay", "pagar") {
         val playerConta = FakePlayer(player)
         var quantidade = Extra.fromMoneyToDouble(args[1])
         quantidade = abs(quantidade)
-        val instance = EduEconomy.instance
+        val instance = EduEconomyPlugin.instance
         if (target == playerConta) {
             player.sendMessage(instance.message("cant-pay-self"))
             return

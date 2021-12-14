@@ -5,38 +5,38 @@ import net.milkbowl.vault.economy.EconomyResponse
 import net.eduard.api.lib.modules.FakePlayer
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType
 import net.eduard.api.lib.modules.Extra
-import net.eduard.economy.EduEconomy
+import net.eduard.economy.EduEconomyPlugin
 import org.bukkit.OfflinePlayer
 import java.util.stream.Collectors
 
 class EconomyVaultSupport : Economy {
     override fun bankBalance(bankName: String): EconomyResponse {
-        val manager = EduEconomy.instance.manager
-        val fake = FakePlayer(bankName)
-        return EconomyResponse(0.0, manager.getCoins(fake), ResponseType.SUCCESS, null)
+        val manager = EduEconomyPlugin.instance.manager
+        val fakePlayer = FakePlayer(bankName)
+        return EconomyResponse(0.0, manager.getCoins(fakePlayer), ResponseType.SUCCESS, null)
     }
 
     override fun bankDeposit(bankName: String, amount: Double): EconomyResponse {
-        val manager = EduEconomy.instance.manager
+        val manager = EduEconomyPlugin.instance.manager
         val fake = FakePlayer(bankName)
         return EconomyResponse(amount, manager.getCoins(fake), ResponseType.SUCCESS, null)
     }
 
     override fun bankHas(bankName: String, amount: Double): EconomyResponse {
-        val manager = EduEconomy.instance.manager
-        val fake = FakePlayer(bankName)
-        return if (manager.getCoins(fake) >= amount) EconomyResponse(
+        val manager = EduEconomyPlugin.instance.manager
+        val fakePlayer = FakePlayer(bankName)
+        return if (manager.getCoins(fakePlayer) >= amount) EconomyResponse(
             amount,
-            manager.getCoins(fake),
+            manager.getCoins(fakePlayer),
             ResponseType.SUCCESS,
             null
-        ) else EconomyResponse(amount, manager.getCoins(fake), ResponseType.FAILURE, null)
+        ) else EconomyResponse(amount, manager.getCoins(fakePlayer), ResponseType.FAILURE, null)
     }
 
     override fun bankWithdraw(bankName: String, amount: Double): EconomyResponse {
-        val manager = EduEconomy.instance.manager
-        val fake = FakePlayer(bankName)
-        return EconomyResponse(amount, manager.getCoins(fake), ResponseType.SUCCESS, null)
+        val manager = EduEconomyPlugin.instance.manager
+        val fakePlayer = FakePlayer(bankName)
+        return EconomyResponse(amount, manager.getCoins(fakePlayer), ResponseType.SUCCESS, null)
     }
 
 
@@ -73,24 +73,24 @@ class EconomyVaultSupport : Economy {
     }
 
     override fun deleteBank(bankName: String): EconomyResponse {
-        val manager = EduEconomy.instance.manager
-        val fake = FakePlayer(bankName)
-        manager.currency.remove(fake)
+        val manager = EduEconomyPlugin.instance.manager
+        val fakePlayer = FakePlayer(bankName)
+        manager.currency.remove(fakePlayer)
         return EconomyResponse(0.0, 0.0, ResponseType.SUCCESS, null)
     }
 
     override fun depositPlayer(playerName: String, amount: Double): EconomyResponse {
-        val manager = EduEconomy.instance.manager
-        val fake = FakePlayer(playerName)
-        manager.addCoins(fake, amount)
-        return EconomyResponse(amount, manager.getCoins(fake), ResponseType.SUCCESS, null)
+        val manager = EduEconomyPlugin.instance.manager
+        val fakePlayer = FakePlayer(playerName)
+        manager.addCoins(fakePlayer, amount)
+        return EconomyResponse(amount, manager.getCoins(fakePlayer), ResponseType.SUCCESS, null)
     }
 
     override fun depositPlayer(player: OfflinePlayer, amount: Double): EconomyResponse {
-        val manager = EduEconomy.instance.manager
-        val fake = FakePlayer(player)
-        manager.addCoins(fake, amount)
-        return EconomyResponse(amount, manager.getCoins(fake), ResponseType.SUCCESS, null)
+        val manager = EduEconomyPlugin.instance.manager
+        val fakePlayer = FakePlayer(player)
+        manager.addCoins(fakePlayer, amount)
+        return EconomyResponse(amount, manager.getCoins(fakePlayer), ResponseType.SUCCESS, null)
     }
 
     override fun depositPlayer(playerName: String, wourldName: String, amount: Double): EconomyResponse {
@@ -110,15 +110,15 @@ class EconomyVaultSupport : Economy {
     }
 
     override fun getBalance(playerName: String): Double {
-        val manager = EduEconomy.instance.manager
-        val fake = FakePlayer(playerName)
-        return manager.getCoins(fake)
+        val manager = EduEconomyPlugin.instance.manager
+        val fakePlayer = FakePlayer(playerName)
+        return manager.getCoins(fakePlayer)
     }
 
     override fun getBalance(player: OfflinePlayer): Double {
-        val manager = EduEconomy.instance.manager
-        val fake = FakePlayer(player)
-        return manager.getCoins(fake)
+        val manager = EduEconomyPlugin.instance.manager
+        val fakePlayer = FakePlayer(player)
+        return manager.getCoins(fakePlayer)
     }
 
     override fun getBalance(playerName: String, worldName: String): Double {
@@ -130,29 +130,29 @@ class EconomyVaultSupport : Economy {
     }
 
     override fun getBanks(): List<String> {
-        return EduEconomy.instance.manager
+        return EduEconomyPlugin.instance.manager
             .currency
             .keys
             .stream()
-            .map { obj: FakePlayer -> obj.name }
+            .map { fakePlayer: FakePlayer -> fakePlayer.name }
             .collect(Collectors.toList())
 
     }
 
     override fun has(playerName: String, amount: Double): Boolean {
-        return  EduEconomy.instance.manager.hasCoins(FakePlayer(playerName), amount)
+        return  EduEconomyPlugin.instance.manager.hasCoins(FakePlayer(playerName), amount)
     }
 
     override fun has(player: OfflinePlayer, amount: Double): Boolean {
-        return  EduEconomy.instance.manager.hasCoins(FakePlayer(player), amount)
+        return  EduEconomyPlugin.instance.manager.hasCoins(FakePlayer(player), amount)
     }
 
     override fun has(playerName: String, worldName: String, amount: Double): Boolean {
-        return  EduEconomy.instance.manager.hasCoins(FakePlayer(playerName), amount)
+        return  EduEconomyPlugin.instance.manager.hasCoins(FakePlayer(playerName), amount)
     }
 
     override fun has(player: OfflinePlayer, worldName: String, amount: Double): Boolean {
-        return  EduEconomy.instance.manager.hasCoins(FakePlayer(player), amount)
+        return  EduEconomyPlugin.instance.manager.hasCoins(FakePlayer(player), amount)
     }
 
     override fun hasAccount(playerName: String): Boolean {
@@ -196,17 +196,17 @@ class EconomyVaultSupport : Economy {
     }
 
     override fun withdrawPlayer(playerName: String, amount: Double): EconomyResponse {
-        val manager = EduEconomy.instance.manager
-        val fake = FakePlayer(playerName)
-        manager.removeCoins(fake, amount)
-        return EconomyResponse(amount, manager.getCoins(fake), ResponseType.SUCCESS, null)
+        val manager = EduEconomyPlugin.instance.manager
+        val fakePlayer = FakePlayer(playerName)
+        manager.removeCoins(fakePlayer, amount)
+        return EconomyResponse(amount, manager.getCoins(fakePlayer), ResponseType.SUCCESS, null)
     }
 
     override fun withdrawPlayer(player: OfflinePlayer, amount: Double): EconomyResponse {
-        val manager = EduEconomy.instance.manager
-        val fake = FakePlayer(player)
-        manager.removeCoins(fake, amount)
-        return EconomyResponse(amount, manager.getCoins(fake), ResponseType.SUCCESS, null)
+        val manager = EduEconomyPlugin.instance.manager
+        val fakePlayer = FakePlayer(player)
+        manager.removeCoins(fakePlayer, amount)
+        return EconomyResponse(amount, manager.getCoins(fakePlayer), ResponseType.SUCCESS, null)
     }
 
     override fun withdrawPlayer(playerName: String, worldName: String, amount: Double): EconomyResponse {

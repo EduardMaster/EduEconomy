@@ -1,11 +1,18 @@
 package net.eduard.economy.core
 
+import net.eduard.api.lib.database.SQLManager
 import net.eduard.api.lib.database.annotations.*
+import net.eduard.api.lib.database.api.DatabaseElement
 import net.eduard.api.lib.modules.FakePlayer
-import net.eduard.economy.EduEconomy
+import net.eduard.api.lib.modules.VaultAPI
+import net.eduard.economy.EduEconomyPlugin
+import org.bukkit.entity.Player
 
 @TableName("economy_users")
-class EconomyUser {
+class EconomyUser : DatabaseElement {
+    override val sqlManager: SQLManager
+        get() = EduEconomyPlugin.instance.sqlManager
+
     @ColumnPrimary
     var id = 0
 
@@ -15,31 +22,35 @@ class EconomyUser {
     val name get() = player.name
 
     var amount = 0.0
-    set(value) {
-        field=value
-        EduEconomy.instance.sqlManager.updateDataQueue(this);
-    }
-    var bonus = 0.0
-    var discont = 0.0
+        set(value) {
+            field = value
+            if (inserted) {
+                updateQueue()
+            } else if (value != 0.0) {
+                insertQueue()
+            }
+        }
 
-    fun transaction(reason : String , amount : Double): EconomyTransaction {
+    val inserted get() = id > 0
+
+    var bonus = 0.0
+    var discount = 0.0
+
+    fun transaction(reason: String, amount: Double): EconomyTransaction {
         val transaction = EconomyTransaction()
-        transaction.user= this
+        transaction.user = this
         transaction.reason = reason
         transaction.changed = amount
         transaction.insertQueue()
         return transaction
     }
 
-
-    fun removeAmount(quantity: Double, disconted : Boolean=true) {
-        amount -= quantity - if (disconted)(quantity * discont)else 0.0
-
+    fun removeAmount(quantity: Double, disconted: Boolean = false) {
+        amount -= quantity - (if (disconted) (quantity * discount) else 0.0)
     }
 
-    fun addAmount(quantity: Double, haveBonus : Boolean=true) {
-        amount += quantity + if (haveBonus)(quantity * bonus)else 0.0
-
+    fun addAmount(quantity: Double, haveBonus: Boolean = false) {
+        amount += quantity + (if (haveBonus) (quantity * bonus) else 0.0)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -52,5 +63,22 @@ class EconomyUser {
 
     override fun hashCode(): Int {
         return id.hashCode()
+    }
+
+    fun updateBonusAndDiscount(player: Player) {
+        var bonusValue = 0.0
+        var discountValue = 0.0
+        for (group in VaultAPI.getPermission().getPlayerGroups(player)) {
+            bonusValue += EduEconomyPlugin.instance.manager.groupsBonus[group.toLowerCase()] ?: 0.0
+            discountValue += EduEconomyPlugin.instance.manager.groupsDiscount[group.toLowerCase()] ?: 0.0
+        }
+        bonus = bonusValue
+        discount = discountValue
+        if (bonus != 0.0 || discount != 0.0) {
+            if (!inserted) {
+                insertQueue()
+            }
+            updateQueue()
+        }
     }
 }

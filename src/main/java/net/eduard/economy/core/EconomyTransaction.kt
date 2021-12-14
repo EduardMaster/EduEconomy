@@ -2,7 +2,7 @@ package net.eduard.economy.core
 
 import net.eduard.api.lib.database.annotations.*
 import net.eduard.api.lib.database.api.DatabaseElement
-import net.eduard.economy.EduEconomy
+import net.eduard.economy.EduEconomyPlugin
 import java.sql.Timestamp
 
 @TableName("economy_trades")
@@ -19,6 +19,6 @@ class EconomyTransaction : DatabaseElement {
 
     var madeAt = Timestamp(System.currentTimeMillis())
 
-    override val sqlManager = EduEconomy.instance.sqlManager
+    override val sqlManager = EduEconomyPlugin.instance.sqlManager
 
 }
