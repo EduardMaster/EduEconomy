@@ -1,10 +1,8 @@
 package net.eduard.economy
 
 import net.eduard.api.lib.kotlin.format
-import net.eduard.api.server.EduardPlugin
 import net.eduard.api.lib.modules.VaultAPI
-import net.eduard.api.server.register
-import net.eduard.api.server.unregister
+import net.eduard.api.server.*
 import net.eduard.economy.command.EconomyCommand
 import net.eduard.economy.core.EconomyManager
 import net.eduard.economy.core.EconomyTransaction
@@ -33,7 +31,7 @@ class EduEconomyPlugin : EduardPlugin() {
         }
 
         api = EconomyAPIImpl()
-        api.register()
+        api.registerAPI()
     }
 
 
@@ -81,9 +79,7 @@ class EduEconomyPlugin : EduardPlugin() {
             for (account in users) {
                 val id = account.id
                 manager.users[account.player] = account
-                log(
-                    "Conta ($id) §a" + account.name.toString() + " §f-> §2" + account.amount.format()
-                )
+                log("Conta ($id) §a" + account.name.toString() + " §f-> §2" + account.amount.format())
             }
             manager.reloadTop()
         }
@@ -91,7 +87,7 @@ class EduEconomyPlugin : EduardPlugin() {
 
     override fun onDisable() {
         save()
-        api.unregister()
+        api.unregisterAPI()
         super.onDisable()
     }
 

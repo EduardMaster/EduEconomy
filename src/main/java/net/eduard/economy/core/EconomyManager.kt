@@ -37,7 +37,6 @@ class EconomyManager : CurrencyManager() {
     fun tradeCoins(fromPlayer: FakePlayer, toPlayer: FakePlayer, amount: Double) {
         val fromUser = getAccount(fromPlayer)
         val toUser = getAccount(toPlayer)
-
         toUser.addAmount(amount, false)
         fromUser.removeAmount(amount, false)
         fromUser.transaction("Paid ${amount.format()} to ${toPlayer.name}", -amount)
@@ -71,9 +70,9 @@ class EconomyManager : CurrencyManager() {
 
     fun setCoins(player: FakePlayer, amount: Double) {
         val user = getAccount(player)
-        val dif = amount - user.amount
+        val changed = amount - user.amount
         user.amount = amount
-        user.transaction("Setted to ${amount.format()}", dif)
+        user.transaction("Setted to ${amount.format()}", changed)
     }
 
     fun removeAccount(account: EconomyUser) {
