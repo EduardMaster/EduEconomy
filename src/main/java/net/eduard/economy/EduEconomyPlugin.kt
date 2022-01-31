@@ -25,11 +25,6 @@ class EduEconomyPlugin : EduardPlugin() {
         EconomyListener().register(this)
         EconomyCommand().registerCommand(this)
         reload()
-
-        syncTimer(60 * 20L, 60 * 20L) {
-            manager.reloadTop()
-        }
-
         api = EconomyAPIImpl()
         api.registerAPI()
     }
@@ -60,6 +55,8 @@ class EduEconomyPlugin : EduardPlugin() {
         messages.add("top-format-header", "&a&lRank de Dinheiro")
         messages.add("top-format", "&b%positionº &f%player: &a%amount.")
         messages.add("top-size", 10)
+        messages.add("top-tycoon" , "§2§lMAGNATA")
+        messages.add("tycoon-change", "§aO jogador §f%player §ase tornou o novo §b§lMagnata")
         messages.saveConfig()
 
         if (configs.contains("economy")) {

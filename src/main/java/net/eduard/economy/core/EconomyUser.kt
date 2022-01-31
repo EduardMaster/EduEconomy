@@ -19,6 +19,11 @@ class EconomyUser : DatabaseElement {
     @ColumnUnique
     var player = FakePlayer("Eduard")
 
+    val isTycoon get() = lastTopPosition == 1
+
+    @Transient
+    var lastTopPosition = 0
+
     val name get() = player.name
 
     var amount = 0.0

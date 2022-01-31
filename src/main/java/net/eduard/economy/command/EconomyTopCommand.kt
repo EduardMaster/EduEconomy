@@ -1,35 +1,34 @@
 package net.eduard.economy.command
 
+import net.eduard.api.lib.kotlin.fake
 import net.eduard.api.lib.manager.CommandManager
 import net.eduard.api.lib.modules.Extra
 import net.eduard.economy.EduEconomyPlugin
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
 class EconomyTopCommand : CommandManager("top", "rank") {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
-        var posicao = 1
+
         val instance = EduEconomyPlugin.instance
         sender.sendMessage(instance.messages.message("top-format-header"))
-        var yourPos = 1
-        for (conta in instance.manager.top) {
-            val player = conta.name
-            val money = conta.amount
-            if (posicao<=10) {
-                sender.sendMessage(
-                    instance.messages.message("top-format")
-                        .replace("%player", player)
-                        .replace("%amount", Extra.formatMoney(money))
-                        .replace("%position", "" + posicao))
-                       // .replace("%tag", VaultAPI.getPlayerGroupPrefix(player)))
-            }
-            if (player == sender.name){
-                yourPos = posicao
-            }
-            posicao++
+        for ((user, money) in instance.manager.top) {
+            val playerName = user.name
+            val pos = user.lastTopPosition
+            sender.sendMessage(
+                instance.messages.message("top-format")
+                    .replace("%player", playerName)
+                    .replace("%amount", Extra.formatMoney(money))
+                    .replace("%position", "" + pos)
+            )
         }
-        sender.sendMessage("")
-        sender.sendMessage("§9Sua posição é ${yourPos}º atualmente.")
+        if (sender is Player){
+            val user = instance.manager.getAccount(sender.fake)
+            sender.sendMessage("")
+            sender.sendMessage("§9Sua posição é ${user.lastTopPosition}º atualmente.")
+        }
+
         return true
     }
 

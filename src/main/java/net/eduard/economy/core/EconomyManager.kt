@@ -3,6 +3,9 @@ package net.eduard.economy.core
 import net.eduard.api.lib.kotlin.format
 import net.eduard.api.server.currency.CurrencyManager
 import net.eduard.api.lib.modules.FakePlayer
+import net.eduard.api.lib.modules.Mine
+import net.eduard.economy.EduEconomyPlugin
+import java.util.concurrent.TimeUnit
 
 
 class EconomyManager : CurrencyManager() {
@@ -11,7 +14,18 @@ class EconomyManager : CurrencyManager() {
     var groupsDiscount = mutableMapOf<String, Double>()
 
     @Transient
-    var top = listOf<EconomyUser>()
+    var top = mapOf<EconomyUser, Double>()
+    get() {
+        if (lastTopUpdate + TimeUnit.MINUTES.toMillis(1) < System.currentTimeMillis()){
+            reloadTop()
+        }
+        return field
+    }
+    @Transient
+    var lastTopUpdate = System.currentTimeMillis()
+
+    @Transient
+    var lastTycoon : EconomyUser? = null
 
     @Transient
     val users = mutableMapOf<FakePlayer, EconomyUser>()
@@ -29,9 +43,26 @@ class EconomyManager : CurrencyManager() {
         }
         return account
     }
+    fun tycoonChange(tycoonUser : EconomyUser){
+        lastTycoon = tycoonUser
+        Mine.broadcast(EduEconomyPlugin.instance.message("tycoon-change")
+            .replace("%player", tycoonUser.name))
+    }
 
     fun reloadTop() {
-        top = users.values.sortedByDescending { it.amount }
+        lastTopUpdate = System.currentTimeMillis()
+        val topSorted = users.values.sortedByDescending { it.amount }
+        var pos = 1;
+        for (user in topSorted) {
+            if (pos == 1 && user != lastTycoon){
+                tycoonChange(user)
+
+            }
+            user.lastTopPosition = pos
+            pos++
+        }
+        val limit = if (topSorted.size>10)10 else topSorted.size
+        top = topSorted.slice(0 until limit).associateWith { it.amount }
     }
 
     fun tradeCoins(fromPlayer: FakePlayer, toPlayer: FakePlayer, amount: Double) {

@@ -5,13 +5,11 @@ import be.maximvdw.featherboard.api.PlaceholderAPI;
 import be.maximvdw.featherboard.api.PlaceholderAPI.PlaceholderRequestEvent;
 import be.maximvdw.featherboard.api.PlaceholderAPI.PlaceholderRequestEventHandler;
 
-
 import net.eduard.api.lib.modules.Extra;
 import net.eduard.api.lib.modules.FakePlayer;
 import net.eduard.economy.EduEconomy;
 */
 
-@SuppressWarnings("deprecation")
 public class FeatherBoardSupport {
 
 	public FeatherBoardSupport() {
