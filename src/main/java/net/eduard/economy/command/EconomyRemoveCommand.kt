@@ -5,6 +5,7 @@ import net.eduard.api.lib.modules.FakePlayer
 import net.eduard.api.lib.modules.Extra
 import net.eduard.economy.EduEconomyPlugin
 import org.bukkit.command.CommandSender
+import kotlin.math.abs
 
 class EconomyRemoveCommand : CommandManager("remove", "take", "tirar", "remover") {
     override fun command(sender: CommandSender, args: Array<String>) {
@@ -13,9 +14,9 @@ class EconomyRemoveCommand : CommandManager("remove", "take", "tirar", "remover"
             return
         }
         val fakeplayer = FakePlayer(args[0])
-        var valor = Extra.fromMoneyToDouble(args[1])
-        valor = Math.abs(valor)
-        EduEconomyPlugin.instance.manager.removeCoins(fakeplayer, valor)
+        var quantidade = Extra.fromMoneyToDouble(args[1])
+        quantidade = abs(quantidade)
+        EduEconomyPlugin.instance.manager.removeCoins(fakeplayer, quantidade)
         if (args.size >= 3) {
             if (args[2] == "-msg") {
                 return
@@ -24,7 +25,7 @@ class EconomyRemoveCommand : CommandManager("remove", "take", "tirar", "remover"
         sender.sendMessage(
             EduEconomyPlugin.instance.message("money-remove")
                 .replace("%player", fakeplayer.name)
-                .replace("%amount", Extra.formatMoney(valor))
+                .replace("%amount", Extra.formatMoney(quantidade))
         )
         fakeplayer
             .sendMessage(

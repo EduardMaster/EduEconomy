@@ -23,8 +23,15 @@ class EconomyPayCommand : CommandManager("pay", "pagar") {
             player.sendMessage(instance.message("cant-pay-self"))
             return
         }
-        if (instance.manager.hasCoins(playerConta, quantidade,false)) {
-            instance.manager.tradeCoins(playerConta, target,quantidade)
+        if (quantidade < 1) {
+            player.sendMessage(
+                instance.message("money-pay-invalid")
+                    .replace("%amount", Extra.formatMoney(quantidade))
+            )
+            return
+        }
+        if (instance.manager.hasCoins(playerConta, quantidade, false)) {
+            instance.manager.tradeCoins(playerConta, target, quantidade)
             player.sendMessage(
                 instance.message("money-pay")
                     .replace("%amount", Extra.formatMoney(quantidade))

@@ -15,9 +15,9 @@ class EconomyAddCommand : CommandManager("add", "adicionar") {
             return
         }
         val player = FakePlayer(args[0])
-        var amount = Extra.fromMoneyToDouble(args[1])
-        amount = abs(amount)
-        EduEconomyPlugin.instance.manager.addCoins(player, amount)
+        var quantidade = Extra.fromMoneyToDouble(args[1])
+        quantidade = abs(quantidade)
+        EduEconomyPlugin.instance.manager.addCoins(player, quantidade)
         if (args.size >= 3) {
             if (args[2] == "-msg") {
                 return
@@ -26,7 +26,7 @@ class EconomyAddCommand : CommandManager("add", "adicionar") {
         sender.sendMessage(
             EduEconomyPlugin.instance.message("money-add")
                 .replace("%player", player.name)
-                .replace("%amount", Extra.formatMoney(amount))
+                .replace("%amount", Extra.formatMoney(quantidade))
         )
         player.sendMessage(
             EduEconomyPlugin.instance.message("money-changed")

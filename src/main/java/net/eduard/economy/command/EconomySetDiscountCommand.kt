@@ -17,9 +17,9 @@ class EconomySetDiscountCommand : CommandManager(
             return
         }
         val grupo = args[0]
-        val bonus =  Extra.toDouble(args[1])
-        EduEconomyPlugin.instance.manager.groupsDiscount[grupo.toLowerCase()] = bonus
-        sender.sendMessage("§aVocê definiu desconto do grupo $grupo para ${bonus.percent()}%")
+        val discountPercent =  Extra.toDouble(args[1])
+        EduEconomyPlugin.instance.manager.setGroupDiscount(grupo,discountPercent )
+        sender.sendMessage("§aVocê definiu desconto do grupo $grupo para ${discountPercent.percent()}%")
     }
 
 

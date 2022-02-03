@@ -22,11 +22,19 @@ class EduEconomyPlugin : EduardPlugin() {
         instance = this
         isFree = true
         super.onEnable()
-        EconomyListener().register(this)
-        EconomyCommand().registerCommand(this)
+        onActivation()
         reload()
         api = EconomyAPIImpl()
         api.registerAPI()
+    }
+
+    override fun onActivation() {
+        EconomyListener().register(this)
+        EconomyCommand().registerCommand(this)
+        val delayUpdateTop = 60 * 5L
+        syncTimer(delayUpdateTop, delayUpdateTop){
+            manager.updateTop()
+        }
     }
 
 
@@ -40,6 +48,7 @@ class EduEconomyPlugin : EduardPlugin() {
         configs.reloadConfig()
         messages.reloadConfig()
         storage.reloadConfig()
+        messages.add("money-pay-invalid","§cA Quantidade definida não pode ser menor que 1.")
         messages.add("system-reload","§aSistema de Economia recarregado.")
         messages.add("cant-pay-self", "&cVocê não pode enviar dinheiro para sí próprio.");
         messages.add("money-add", "&aVocê adicionou %amount de dinheiro para o jogador %player.")
@@ -78,7 +87,7 @@ class EduEconomyPlugin : EduardPlugin() {
                 manager.users[account.player] = account
                 log("Conta ($id) §a" + account.name.toString() + " §f-> §2" + account.amount.format())
             }
-            manager.reloadTop()
+            manager.updateTop()
         }
     }
 

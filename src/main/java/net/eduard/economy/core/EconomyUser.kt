@@ -6,6 +6,7 @@ import net.eduard.api.lib.database.api.DatabaseElement
 import net.eduard.api.lib.modules.FakePlayer
 import net.eduard.api.lib.modules.VaultAPI
 import net.eduard.economy.EduEconomyPlugin
+import org.bukkit.World
 import org.bukkit.entity.Player
 
 @TableName("economy_users")
@@ -70,6 +71,27 @@ class EconomyUser : DatabaseElement {
         return id.hashCode()
     }
 
+    fun save(){
+        if (!inserted) {
+            insertQueue()
+        }else {
+            updateQueue()
+        }
+    }
+    fun updateBonusAndDiscount() {
+        var bonusValue = 0.0
+        var discountValue = 0.0
+        val world : String? = null
+        for (group in VaultAPI.getPermission().getPlayerGroups(world,player)) {
+            bonusValue += EduEconomyPlugin.instance.manager.groupsBonus[group.toLowerCase()] ?: 0.0
+            discountValue += EduEconomyPlugin.instance.manager.groupsDiscount[group.toLowerCase()] ?: 0.0
+        }
+        bonus = bonusValue
+        discount = discountValue
+        if (bonus != 0.0 || discount != 0.0) {
+            save()
+        }
+    }
     fun updateBonusAndDiscount(player: Player) {
         var bonusValue = 0.0
         var discountValue = 0.0
@@ -80,10 +102,7 @@ class EconomyUser : DatabaseElement {
         bonus = bonusValue
         discount = discountValue
         if (bonus != 0.0 || discount != 0.0) {
-            if (!inserted) {
-                insertQueue()
-            }
-            updateQueue()
+            save()
         }
     }
 }

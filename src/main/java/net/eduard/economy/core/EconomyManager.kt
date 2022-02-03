@@ -5,7 +5,6 @@ import net.eduard.api.server.currency.CurrencyManager
 import net.eduard.api.lib.modules.FakePlayer
 import net.eduard.api.lib.modules.Mine
 import net.eduard.economy.EduEconomyPlugin
-import java.util.concurrent.TimeUnit
 
 
 class EconomyManager : CurrencyManager() {
@@ -15,12 +14,7 @@ class EconomyManager : CurrencyManager() {
 
     @Transient
     var top = mapOf<EconomyUser, Double>()
-    get() {
-        if (lastTopUpdate + TimeUnit.MINUTES.toMillis(1) < System.currentTimeMillis()){
-            reloadTop()
-        }
-        return field
-    }
+
     @Transient
     var lastTopUpdate = System.currentTimeMillis()
 
@@ -32,6 +26,18 @@ class EconomyManager : CurrencyManager() {
 
     fun hasAccount(fakePlayer: FakePlayer): Boolean {
         return fakePlayer in users
+    }
+    fun setGroupDiscount(groupName : String , discountPercent : Double){
+        groupsDiscount[groupName.toLowerCase()] = discountPercent
+        for (user in users.values){
+            user.updateBonusAndDiscount()
+        }
+    }
+    fun setGroupBonus(groupName : String, bonusPercent : Double){
+        groupsBonus[groupName.toLowerCase()] = bonusPercent
+        for (user in users.values){
+            user.updateBonusAndDiscount()
+        }
     }
 
     fun getAccount(fakePlayer: FakePlayer): EconomyUser {
@@ -49,7 +55,7 @@ class EconomyManager : CurrencyManager() {
             .replace("%player", tycoonUser.name))
     }
 
-    fun reloadTop() {
+    fun updateTop() {
         lastTopUpdate = System.currentTimeMillis()
         val topSorted = users.values.sortedByDescending { it.amount }
         var pos = 1;
