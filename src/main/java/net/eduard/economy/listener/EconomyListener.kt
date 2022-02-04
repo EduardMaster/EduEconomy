@@ -5,15 +5,20 @@ import net.eduard.api.lib.kotlin.fake
 import net.eduard.api.lib.manager.EventsManager
 import net.eduard.economy.EduEconomyPlugin
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.player.PlayerJoinEvent
 
 class EconomyListener : EventsManager() {
-
-    @EventHandler
-    fun onJoin(e: PlayerJoinEvent) {
+    @EventHandler(priority = EventPriority.LOW)
+    fun onJoinCreateAccountIfNotExists(e: PlayerJoinEvent) {
+       EduEconomyPlugin.instance.manager.getAccount(e.player.fake)
+    }
+    @EventHandler(priority = EventPriority.MONITOR)
+    fun onFinishJoinUpdateBonusAndDiscount(e: PlayerJoinEvent) {
         val user = EduEconomyPlugin.instance.manager.getAccount(e.player.fake)
         user.updateBonusAndDiscount(e.player)
     }
+
     @EventHandler
     fun onChat(e: ChatMessageEvent){
         val user = EduEconomyPlugin.instance.manager.getAccount(e.player.fake)

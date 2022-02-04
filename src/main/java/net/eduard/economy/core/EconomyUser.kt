@@ -6,7 +6,6 @@ import net.eduard.api.lib.database.api.DatabaseElement
 import net.eduard.api.lib.modules.FakePlayer
 import net.eduard.api.lib.modules.VaultAPI
 import net.eduard.economy.EduEconomyPlugin
-import org.bukkit.World
 import org.bukkit.entity.Player
 
 @TableName("economy_users")

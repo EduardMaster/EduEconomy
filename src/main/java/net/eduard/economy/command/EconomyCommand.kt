@@ -30,7 +30,6 @@ class EconomyCommand : CommandManager("money","coins","coin","dinheiro") {
 
     init {
         register(EconomyAddCommand())
-        register(EconomyHelpCommand())
         register(EconomyInfoCommand())
         register(EconomyRemoveCommand())
         register(EconomySetCommand())
@@ -40,5 +39,7 @@ class EconomyCommand : CommandManager("money","coins","coin","dinheiro") {
         register(EconomyShowCommand())
         register(EconomySetBonusCommand())
         register(EconomySetDiscountCommand())
+        register(EconomyUpdateDiscountBonusCommand())
+        register(EconomyHelpCommand())
     }
 }

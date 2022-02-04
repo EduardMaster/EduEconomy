@@ -19,7 +19,7 @@ class EconomyManager : CurrencyManager() {
     var lastTopUpdate = System.currentTimeMillis()
 
     @Transient
-    var lastTycoon : EconomyUser? = null
+    var lastTycoon: EconomyUser? = null
 
     @Transient
     val users = mutableMapOf<FakePlayer, EconomyUser>()
@@ -27,16 +27,22 @@ class EconomyManager : CurrencyManager() {
     fun hasAccount(fakePlayer: FakePlayer): Boolean {
         return fakePlayer in users
     }
-    fun setGroupDiscount(groupName : String , discountPercent : Double){
+
+    fun setGroupDiscount(groupName: String, discountPercent: Double) {
         groupsDiscount[groupName.toLowerCase()] = discountPercent
-        for (user in users.values){
-            user.updateBonusAndDiscount()
-        }
+        updatePlayersBonusAndDiscount()
     }
-    fun setGroupBonus(groupName : String, bonusPercent : Double){
+
+    fun setGroupBonus(groupName: String, bonusPercent: Double) {
         groupsBonus[groupName.toLowerCase()] = bonusPercent
-        for (user in users.values){
-            user.updateBonusAndDiscount()
+        updatePlayersBonusAndDiscount()
+    }
+
+    fun updatePlayersBonusAndDiscount() {
+        EduEconomyPlugin.instance.asyncTask {
+            for (user in users.values) {
+                user.updateBonusAndDiscount()
+            }
         }
     }
 
@@ -49,10 +55,13 @@ class EconomyManager : CurrencyManager() {
         }
         return account
     }
-    fun tycoonChange(tycoonUser : EconomyUser){
+
+    fun tycoonChange(tycoonUser: EconomyUser) {
         lastTycoon = tycoonUser
-        Mine.broadcast(EduEconomyPlugin.instance.message("tycoon-change")
-            .replace("%player", tycoonUser.name))
+        Mine.broadcast(
+            EduEconomyPlugin.instance.message("tycoon-change")
+                .replace("%player", tycoonUser.name)
+        )
     }
 
     fun updateTop() {
@@ -60,14 +69,14 @@ class EconomyManager : CurrencyManager() {
         val topSorted = users.values.sortedByDescending { it.amount }
         var pos = 1;
         for (user in topSorted) {
-            if (pos == 1 && user != lastTycoon){
+            if (pos == 1 && user != lastTycoon) {
                 tycoonChange(user)
 
             }
             user.lastTopPosition = pos
             pos++
         }
-        val limit = if (topSorted.size>10)10 else topSorted.size
+        val limit = if (topSorted.size > 10) 10 else topSorted.size
         top = topSorted.slice(0 until limit).associateWith { it.amount }
     }
 

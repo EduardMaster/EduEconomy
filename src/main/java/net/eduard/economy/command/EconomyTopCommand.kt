@@ -16,17 +16,16 @@ class EconomyTopCommand : CommandManager("top", "rank") {
         for ((user, money) in instance.manager.top) {
             val playerName = user.name
             val pos = user.lastTopPosition
-            sender.sendMessage(
-                instance.messages.message("top-format")
-                    .replace("%player", playerName)
-                    .replace("%amount", Extra.formatMoney(money))
-                    .replace("%position", "" + pos)
+            sender.sendMessage(instance.messages.message("top-format")
+                .replace("%player", playerName)
+                .replace("%amount", Extra.formatMoney(money))
+                .replace("%position", "" + pos)
             )
         }
         if (sender is Player){
             val user = instance.manager.getAccount(sender.fake)
             sender.sendMessage("")
-            sender.sendMessage("§9Sua posição é ${user.lastTopPosition}º atualmente.")
+            sender.sendMessage("§6Sua posição é §e${user.lastTopPosition}º §6atualmente.")
         }
 
         return true

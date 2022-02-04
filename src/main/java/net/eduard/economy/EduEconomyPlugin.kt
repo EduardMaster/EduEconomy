@@ -48,6 +48,7 @@ class EduEconomyPlugin : EduardPlugin() {
         configs.reloadConfig()
         messages.reloadConfig()
         storage.reloadConfig()
+        messages.add("money-discount-bonus-update","§aO Conta do jogador %player foi atualizada seus Desconto e Bonus também")
         messages.add("money-pay-invalid","§cA Quantidade definida não pode ser menor que 1.")
         messages.add("system-reload","§aSistema de Economia recarregado.")
         messages.add("cant-pay-self", "&cVocê não pode enviar dinheiro para sí próprio.");
@@ -82,11 +83,14 @@ class EduEconomyPlugin : EduardPlugin() {
             sqlManager.createTable<EconomyTransaction>()
             sqlManager.createReferences<EconomyTransaction>()
             val users = sqlManager.getAllData(EconomyUser::class.java)
+            val stringBuilder = StringBuilder()
             for (account in users) {
                 val id = account.id
                 manager.users[account.player] = account
-                log("Conta ($id) §a" + account.name.toString() + " §f-> §2" + account.amount.format())
+                stringBuilder.append("§fConta ($id) §a" + account.name.toString() + " §f-> §2" + account.amount.format())
+                stringBuilder.append(", ")
             }
+            log(stringBuilder.toString())
             manager.updateTop()
         }
     }
