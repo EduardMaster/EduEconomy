@@ -28,6 +28,14 @@ class EconomyManager : CurrencyManager() {
         return fakePlayer in users
     }
 
+    fun getGroupBonus(groupName: String): Double {
+        return groupsBonus[groupName.toLowerCase()] ?: 0.0
+    }
+
+    fun getGroupDiscount(groupName: String): Double {
+        return groupsDiscount[groupName.toLowerCase()] ?: 0.0
+    }
+
     fun setGroupDiscount(groupName: String, discountPercent: Double) {
         groupsDiscount[groupName.toLowerCase()] = discountPercent
         updatePlayersBonusAndDiscount()
@@ -46,12 +54,12 @@ class EconomyManager : CurrencyManager() {
         }
     }
 
-    fun getAccount(fakePlayer: FakePlayer): EconomyUser {
-        var account = users[fakePlayer]
+    fun getAccount(player: FakePlayer): EconomyUser {
+        var account = users[player]
         if (account == null) {
             account = EconomyUser()
-            account.player = fakePlayer
-            users[fakePlayer] = account
+            account.player = player
+            users[player] = account
         }
         return account
     }
@@ -129,4 +137,5 @@ class EconomyManager : CurrencyManager() {
         users.clear()
         currency.clear()
     }
+
 }

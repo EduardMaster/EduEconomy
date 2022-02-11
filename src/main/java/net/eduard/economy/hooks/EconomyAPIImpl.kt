@@ -8,6 +8,22 @@ class EconomyAPIImpl : EconomySystem {
 
     val manager get() = EduEconomyPlugin.instance.manager
 
+    override fun setGroupBonus(groupName: String, percent: Double) {
+        manager.setGroupBonus(groupName, percent)
+    }
+
+    override fun setGroupDiscount(groupName: String, percent: Double) {
+        manager.setGroupBonus(groupName , percent)
+    }
+
+    override fun getGroupBonus(groupName: String): Double {
+        return manager.getGroupBonus(groupName)
+    }
+
+    override fun getGroupDiscount(groupName: String): Double {
+        return manager.getGroupDiscount(groupName)
+    }
+
     override fun check(playerName: String, amount: Double): Boolean {
         return manager.hasCoins(FakePlayer(playerName), amount)
     }
