@@ -25,7 +25,7 @@ class EconomyUser : DatabaseElement {
     var lastTopPosition = 0
 
     val name get() = player.name
-
+    val inserted get() = id > 0
     var amount = 0.0
         set(value) {
             field = value
@@ -36,7 +36,13 @@ class EconomyUser : DatabaseElement {
             }
         }
 
-    val inserted get() = id > 0
+    fun save() {
+        if (!inserted) {
+            insertQueue()
+        } else {
+            updateQueue()
+        }
+    }
 
     var bonus = 0.0
     var discount = 0.0
@@ -46,7 +52,8 @@ class EconomyUser : DatabaseElement {
         transaction.user = this
         transaction.reason = reason
         transaction.changed = amount
-        transaction.insertQueue()
+        if (inserted)
+            transaction.insertQueue()
         return transaction
     }
 
@@ -70,18 +77,12 @@ class EconomyUser : DatabaseElement {
         return id.hashCode()
     }
 
-    fun save(){
-        if (!inserted) {
-            insertQueue()
-        }else {
-            updateQueue()
-        }
-    }
+
     fun updateBonusAndDiscount() {
         var bonusValue = 0.0
         var discountValue = 0.0
-        val world : String? = null
-        for (group in VaultAPI.getPermission().getPlayerGroups(world,player)) {
+        val world: String? = null
+        for (group in VaultAPI.getPermission().getPlayerGroups(world, player)) {
             bonusValue += EduEconomyPlugin.instance.manager.groupsBonus[group.toLowerCase()] ?: 0.0
             discountValue += EduEconomyPlugin.instance.manager.groupsDiscount[group.toLowerCase()] ?: 0.0
         }
@@ -91,6 +92,7 @@ class EconomyUser : DatabaseElement {
             save()
         }
     }
+
     fun updateBonusAndDiscount(player: Player) {
         var bonusValue = 0.0
         var discountValue = 0.0

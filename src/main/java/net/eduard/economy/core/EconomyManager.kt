@@ -66,10 +66,8 @@ class EconomyManager : CurrencyManager() {
 
     fun tycoonChange(tycoonUser: EconomyUser) {
         lastTycoon = tycoonUser
-        Mine.broadcast(
-            EduEconomyPlugin.instance.message("tycoon-change")
-                .replace("%player", tycoonUser.name)
-        )
+        Mine.broadcast(EduEconomyPlugin.instance.message("tycoon-change")
+                .replace("%player", tycoonUser.name))
     }
 
     fun updateTop() {
