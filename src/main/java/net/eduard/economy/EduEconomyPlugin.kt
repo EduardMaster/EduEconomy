@@ -1,6 +1,8 @@
 package net.eduard.economy
 
+import net.eduard.api.lib.kotlin.fake
 import net.eduard.api.lib.kotlin.format
+import net.eduard.api.lib.modules.Mine
 import net.eduard.api.lib.modules.VaultAPI
 import net.eduard.api.server.*
 import net.eduard.economy.command.EconomyCommand
@@ -35,6 +37,12 @@ class EduEconomyPlugin : EduardPlugin() {
         syncTimer(delayUpdateTop, delayUpdateTop){
             manager.updateTop()
         }
+        Mine.addReplacer("buy-limit"){
+            manager.getAccount(it.fake).buyLimit.format()
+        }
+        Mine.addReplacer("sell-limit"){
+            manager.getAccount(it.fake).sellLimit.format()
+        }
     }
 
 
@@ -52,16 +60,34 @@ class EduEconomyPlugin : EduardPlugin() {
         messages.add("money-pay-invalid","§cA Quantidade definida não pode ser menor que 1.")
         messages.add("system-reload","§aSistema de Economia recarregado.")
         messages.add("cant-pay-self", "&cVocê não pode enviar dinheiro para sí próprio.");
+
+        messages.add("buy-limit-add", "&aVocê adicionou %amount de Limite de Compra para o jogador %player.")
+        messages.add("buy-limit-set", "&aVocê definiu %amount de Limite de Compra para o jogador %player.")
+        messages.add("buy-limit-remove", "&aVocê remevou %amount de Limite de Compra para o jogador %player.")
+        messages.add("buy-limit-changed", "&aSeu Limite de Compra foi atualizado pelo %player.")
+        messages.add("buy-limit-check", "&aSeu Limite de Compra é %amount.")
+
+
+        messages.add("sell-limit-add", "&aVocê adicionou %amount de Limite de Venda para o jogador %player.")
+        messages.add("sell-limit-set", "&aVocê definiu %amount de Limite de Venda para o jogador %player.")
+        messages.add("sell-limit-remove", "&aVocê remevou %amount de Limite de Venda para o jogador %player.")
+        messages.add("buy-limit-changed", "&aSeu Limite de Venda foi atualizado pelo %player.")
+        messages.add("buy-limit-check", "&aSeu Limite de Venda é %amount.")
+
+
+
         messages.add("money-add", "&aVocê adicionou %amount de dinheiro para o jogador %player.")
         messages.add("money-add-player", "&aFoi adicionado ao seu banco %amount pelo Jogador %player.")
         messages.add("money-set", "&aVocê definiu %amount de dinheiro para o jogador %player.")
         messages.add("money-remove", "&aVocê remevou %amount de dinheiro para o jogador %player.")
         messages.add("money-check", "&aSeu dinheiro é %amount.")
+        
         messages.add("money-changed", "&aSeu dinheiro foi atualizado pelo jogador %player.")
         messages.add("money-need", "§cDinheiro insuficiente para poder pagar outro jogador.")
         messages.add("money-pay", "§aVocê pagou %amount para o %player.")
         messages.add("money-payment" ,"§aVocê recebeu %amount do %player.")
         messages.add("money-player-check", "§aO dinheiro do jogador %player é %amount.")
+
         messages.add("top-format-header", "&a&lRank de Dinheiro")
         messages.add("top-format", "&b%positionº &f%player: &a%amount.")
         messages.add("top-size", 10)
