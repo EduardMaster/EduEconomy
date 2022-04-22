@@ -17,10 +17,11 @@ class EconomyRemoveSellLimitCommand : CommandManager("removebuylimit",  "remover
             sendUsage(sender)
             return
         }
-        val fakeplayer = FakePlayer(args[0])
+        val player = FakePlayer(args[0])
         var quantidade = Extra.fromMoneyToDouble(args[1])
         quantidade = abs(quantidade)
-        EduEconomyPlugin.instance.manager.removeCoins(fakeplayer, quantidade)
+        val conta = EduEconomyPlugin.instance.manager.getAccount(player)
+        conta.sellLimit -= quantidade
         if (args.size >= 3) {
             if (args[2] == "-msg") {
                 return
@@ -28,10 +29,10 @@ class EconomyRemoveSellLimitCommand : CommandManager("removebuylimit",  "remover
         }
         sender.sendMessage(
             EduEconomyPlugin.instance.message("sell-limit-remove")
-                .replace("%player", fakeplayer.name)
+                .replace("%player", player.name)
                 .replace("%amount", Extra.formatMoney(quantidade))
         )
-        fakeplayer
+        player
             .sendMessage(
                 EduEconomyPlugin.instance.message("sell-limit-changed")
                     .replace("%player", sender.name)

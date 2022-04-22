@@ -29,7 +29,7 @@ class EconomySellLimitCommand : CommandManager("selllimit","limitedevenda") {
             val user = EduEconomyPlugin.instance.manager.getAccount(player)
             sender.sendMessage(EduEconomyPlugin.instance.message("sell-limit-check")
                 .replace("%amount", "" + Extra.formatMoney(
-                    user.buyLimit)))
+                    user.sellLimit)))
         }
     }
 

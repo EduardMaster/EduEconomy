@@ -18,10 +18,11 @@ class EconomySetSellLimitCommand : CommandManager("setselllimit", "difinirlimitd
             sendUsage(sender)
             return
         }
-        val fakeplayer = FakePlayer(args[0])
-        var valor = Extra.fromMoneyToDouble(args[1])
-        valor = abs(valor)
-        EduEconomyPlugin.instance.manager.setCoins(fakeplayer, valor)
+        val player = FakePlayer(args[0])
+        var quantidade = Extra.fromMoneyToDouble(args[1])
+        quantidade = abs(quantidade)
+        val conta = EduEconomyPlugin.instance.manager.getAccount(player)
+        conta.sellLimit = quantidade
         if (args.size >= 3) {
             if (args[2] === "-msg") {
                 return
@@ -29,10 +30,10 @@ class EconomySetSellLimitCommand : CommandManager("setselllimit", "difinirlimitd
         }
         sender.sendMessage(
             EduEconomyPlugin.instance.message("sell-limit-set")
-                .replace("%player", fakeplayer.name)
-                .replace("%amount", Extra.formatMoney(valor))
+                .replace("%player", player.name)
+                .replace("%amount", Extra.formatMoney(quantidade))
         )
-        fakeplayer.sendMessage(EduEconomyPlugin.instance
+        player.sendMessage(EduEconomyPlugin.instance
             .message("sell-limit-changed")
             .replace("%player", sender.name))
     }

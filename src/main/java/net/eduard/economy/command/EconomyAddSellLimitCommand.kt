@@ -13,6 +13,7 @@ class EconomyAddSellLimitCommand : CommandManager("addselllimit", "adicionarlimi
         usage = "/money addselllimit <player> <limit>"
         description = "Adicionar Limite de Venda para o jogador"
     }
+
     override fun command(sender: CommandSender, args: Array<String>) {
 
         if (args.size < 2) {
@@ -22,7 +23,9 @@ class EconomyAddSellLimitCommand : CommandManager("addselllimit", "adicionarlimi
         val player = FakePlayer(args[0])
         var quantidade = Extra.fromMoneyToDouble(args[1])
         quantidade = abs(quantidade)
-        EduEconomyPlugin.instance.manager.addCoins(player, quantidade)
+        val conta = EduEconomyPlugin.instance.manager.getAccount(player)
+        conta.sellLimit += quantidade
+
         if (args.size >= 3) {
             if (args[2] == "-msg") {
                 return

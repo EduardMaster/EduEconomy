@@ -37,12 +37,8 @@ class EduEconomyPlugin : EduardPlugin() {
         syncTimer(delayUpdateTop, delayUpdateTop){
             manager.updateTop()
         }
-        Mine.addReplacer("buy-limit"){
-            manager.getAccount(it.fake).buyLimit.format()
-        }
-        Mine.addReplacer("sell-limit"){
-            manager.getAccount(it.fake).sellLimit.format()
-        }
+        Mine.addReplacer("buy_limit"){ manager.getAccount(it.fake).buyLimit.format() }
+        Mine.addReplacer("sell_limit"){ manager.getAccount(it.fake).sellLimit.format() }
     }
 
 

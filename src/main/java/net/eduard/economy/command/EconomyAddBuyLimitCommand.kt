@@ -22,7 +22,9 @@ class EconomyAddBuyLimitCommand : CommandManager("addbuylimit", "adicionarlimite
         val player = FakePlayer(args[0])
         var quantidade = Extra.fromMoneyToDouble(args[1])
         quantidade = abs(quantidade)
-        EduEconomyPlugin.instance.manager.addCoins(player, quantidade)
+        val conta = EduEconomyPlugin.instance.manager.getAccount(player)
+        conta.buyLimit+= quantidade
+
         if (args.size >= 3) {
             if (args[2] == "-msg") {
                 return
