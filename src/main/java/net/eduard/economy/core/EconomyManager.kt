@@ -5,10 +5,13 @@ import net.eduard.api.server.currency.CurrencyManager
 import net.eduard.api.lib.modules.FakePlayer
 import net.eduard.api.lib.modules.Mine
 import net.eduard.economy.EduEconomyPlugin
+import kotlin.math.acos
 
 
 class EconomyManager : CurrencyManager() {
 
+    var defaultBuyLimit = 100_000_000_000.0
+    var defaultSellLimit = 100_000_000_000.0
     var groupsBonus = mutableMapOf<String, Double>()
     var groupsDiscount = mutableMapOf<String, Double>()
 
@@ -59,6 +62,8 @@ class EconomyManager : CurrencyManager() {
         if (account == null) {
             account = EconomyUser()
             account.player = player
+            account.buyLimit = defaultBuyLimit
+            account.sellLimit = defaultSellLimit
             users[player] = account
         }
         return account
