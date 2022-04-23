@@ -1,5 +1,6 @@
 package net.eduard.economy.command
 
+import net.eduard.api.lib.kotlin.format
 import net.eduard.api.lib.manager.CommandManager
 import net.eduard.api.lib.modules.FakePlayer
 import net.eduard.api.lib.modules.Extra
@@ -18,9 +19,19 @@ class EconomySetSellLimitCommand : CommandManager("setselllimit", "difinirlimitd
             sendUsage(sender)
             return
         }
-        val player = FakePlayer(args[0])
+        val playerName = args[0]
+        val player = FakePlayer(playerName)
         var quantidade = Extra.fromMoneyToDouble(args[1])
-        quantidade = abs(quantidade)
+        if (playerName.equals("all",true)||
+            playerName.equals("todos",true)){
+            for (user in EduEconomyPlugin.instance.manager.users.values){
+                user.sellLimit = quantidade
+                user.updateQueue()
+            }
+            sender.sendMessage("§aLimite de Venda de todos jogadores definido para ${quantidade.format()}")
+            EduEconomyPlugin.instance.manager.defaultBuyLimit = quantidade
+            return
+        }
         val conta = EduEconomyPlugin.instance.manager.getAccount(player)
         conta.sellLimit = quantidade
         if (args.size >= 3) {
