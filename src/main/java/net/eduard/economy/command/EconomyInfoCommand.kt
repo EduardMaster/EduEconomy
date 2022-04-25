@@ -6,30 +6,38 @@ import net.eduard.api.lib.manager.CommandManager
 import net.eduard.api.lib.modules.FakePlayer
 import net.eduard.economy.EduEconomyPlugin
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
 class EconomyInfoCommand : CommandManager("info", "status") {
     override fun command(sender: CommandSender, args: Array<String>) {
         if (args.isEmpty()) {
-            sender.sendMessage("§aBonus por Grupo")
-            for ((group, percent) in EduEconomyPlugin.instance.manager.groupsBonus) {
-                sender.sendMessage("§2$group -> ${percent.percent()}%")
+            if (sender.hasPermission("$permission.admin")) {
+                sender.sendMessage("§6Informações relacionado a Economia")
+                sender.sendMessage("§aBonus por Grupo")
+                for ((group, percent) in EduEconomyPlugin.instance.manager.groupsBonus) {
+                    sender.sendMessage("§b$group -> §3${percent.percent()}%")
+                }
+                sender.sendMessage("§aDescontos por Grupo")
+                for ((group, percent) in EduEconomyPlugin.instance.manager.groupsDiscount) {
+                    sender.sendMessage("§b$group -> §3${percent.percent()}%")
+                }
+            }else{
+                sendUsage(sender)
             }
-            sender.sendMessage("§bDescontos por Grupo")
-            for ((group, percent) in EduEconomyPlugin.instance.manager.groupsDiscount) {
-                sender.sendMessage("§3$group -> ${percent.percent()}%")
-            }
-        }else{
+        } else {
 
             val user = EduEconomyPlugin.instance.manager.getAccount(FakePlayer(args[0]))
-            sender.sendMessage("§bInformações do ${user.name}")
-            sender.sendMessage("§aSaldo: §2${user.amount.format()}")
-            sender.sendMessage("§aDesconto: §2${user.discount.percent()}%")
-            sender.sendMessage("§aBonus: §2${user.bonus.percent()}%")
+            sender.sendMessage("§bInformações do §f${user.name}")
+            sender.sendMessage("§fSaldo: §a${user.amount.format()}")
+            sender.sendMessage("§fDesconto: §a${user.discount.percent()}%")
+            sender.sendMessage("§fBonus: §a${user.bonus.percent()}%")
+            sender.sendMessage("§eLimite de Compra: §a$§7${user.buyLimit.format()}")
+            sender.sendMessage("§eLimite de Venda: §a$§7${user.sellLimit.format()}")
         }
     }
 
     init {
-        usage= "/money info [jogador]"
+        usage = "/money info [jogador]"
         description = "Ver as configs atuais do Sistema de Economia"
     }
 }

@@ -11,8 +11,8 @@ import kotlin.math.acos
 
 class EconomyManager : CurrencyManager() {
 
-    var defaultBuyLimit = 100_000_000_000.0
-    var defaultSellLimit = 100_000_000_000.0
+    var defaultBuyLimit = 100_000_000.0
+    var defaultSellLimit = 1_000_000.0
     var bonusBuyLimit = 1_000_000.0
     var bonusBuyLimitDelay = TimeUnit.HOURS.toMillis(1)
     var bonusSellLimit = 1_000_000.0
