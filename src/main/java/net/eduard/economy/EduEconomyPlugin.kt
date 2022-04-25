@@ -73,7 +73,7 @@ class EduEconomyPlugin : EduardPlugin() {
         messages.add("sell-limit-set", "&aVocê definiu %amount de Limite de Venda para o jogador %player.")
         messages.add("sell-limit-remove", "&aVocê remevou %amount de Limite de Venda para o jogador %player.")
         messages.add("buy-limit-changed", "&aSeu Limite de Venda foi atualizado pelo %player.")
-        messages.add("buy-limit-check", "&aSeu Limite de Venda é %amount.")
+        messages.add("sell-limit-check", "&aSeu Limite de Venda é %amount.")
 
 
 

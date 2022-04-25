@@ -17,7 +17,7 @@ class EconomySetBonusSellLimitCommand : CommandManager("setbonusselllimit", "dif
             return
         }
         val quantidade = Extra.fromMoneyToDouble(args[0])
-        EduEconomyPlugin.instance.manager.bonusBuyLimit = quantidade
+        EduEconomyPlugin.instance.manager.bonusSellLimit  = quantidade
         sender.sendMessage(
             EduEconomyPlugin.instance.message("sell-limit-bonus-set")
                 .replace("%amount", Extra.formatMoney(quantidade))

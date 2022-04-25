@@ -22,9 +22,10 @@ class GlowBuyLimitAndSellLimitTask : TimeManager(60) {
         val manager = EduEconomyPlugin.instance.manager
         for (player in Mine.getPlayers()) {
             val user = manager.getAccount(player.fake)
-            user.buyLimit+=manager.bonusBuyLimit
+            user.buyLimit+= manager.bonusBuyLimit
         }
         manager.bonusBuyLimitLastTime = System.currentTimeMillis()
+        manager.defaultBuyLimit+= manager.bonusBuyLimit
     }
 
     fun growSellLimit(){
@@ -34,5 +35,6 @@ class GlowBuyLimitAndSellLimitTask : TimeManager(60) {
             user.sellLimit+=manager.bonusSellLimit
         }
         manager.bonusSellLimitLastTime = System.currentTimeMillis()
+        manager.defaultSellLimit += manager.bonusSellLimit
     }
 }
