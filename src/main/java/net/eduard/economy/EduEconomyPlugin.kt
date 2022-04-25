@@ -62,6 +62,8 @@ class EduEconomyPlugin : EduardPlugin() {
 
         messages.add("buy-limit-add", "&aVocê adicionou %amount de Limite de Compra para o jogador %player.")
         messages.add("buy-limit-set", "&aVocê definiu %amount de Limite de Compra para o jogador %player.")
+        messages.add("buy-limit-bonus-set", "&aVocê definiu Bonus de Limite de Compra a cada x Tempo para %amount")
+        messages.add("sell-limit-bonus-set", "&aVocê definiu Bonus de Limite de Venda a cada x Tempo para %amount")
         messages.add("buy-limit-remove", "&aVocê remevou %amount de Limite de Compra para o jogador %player.")
         messages.add("buy-limit-changed", "&aSeu Limite de Compra foi atualizado pelo %player.")
         messages.add("buy-limit-check", "&aSeu Limite de Compra é %amount.")
@@ -109,13 +111,17 @@ class EduEconomyPlugin : EduardPlugin() {
             sqlManager.createReferences<EconomyTransaction>()
             val users = sqlManager.getAllData(EconomyUser::class.java)
             val stringBuilder = StringBuilder()
+            var amount = 0
             for (account in users) {
                 val id = account.id
                 manager.users[account.player] = account
-                stringBuilder.append("§fConta ($id) §a" + account.name.toString() + " §f-> §2" + account.amount.format())
-                stringBuilder.append(", ")
+                if (amount<=100) {
+                    stringBuilder.append("§f§a" + account.name.toString() + "($id) §f-> §2" + account.amount.format())
+                    stringBuilder.append(", ")
+                }
+                amount++
             }
-            log(stringBuilder.toString())
+            log("Contas carregadas: $amount -> $stringBuilder")
             manager.updateTop()
         }
     }
