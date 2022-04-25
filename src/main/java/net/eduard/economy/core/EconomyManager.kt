@@ -63,6 +63,15 @@ class EconomyManager : CurrencyManager() {
             }
         }
     }
+
+    fun wipe(): Int {
+        val amount = users.size
+        EduEconomyPlugin.instance.sqlManager.clearTable<EconomyTransaction>()
+        EduEconomyPlugin.instance.sqlManager.clearTable<EconomyUser>()
+        users.clear()
+        return amount
+    }
+
     fun reset(): Int {
         for (user in users.values) {
             user.buyLimit = defaultBuyLimit

@@ -11,7 +11,7 @@ class EconomySetBonusBuyLimitDelayCommand : CommandManager(
     "difinirbonusdelimitdecompratempo"
 ) {
     init {
-        usage = "/money setbonusbuylimitdelay <time|s|m|d>"
+        usage = "/money setbonusbuylimitdelay <time|s|m|h|d>"
         description = "Definir Tempo entre os Aumentos de Limite de Compra de todos jogadores"
     }
 
@@ -20,7 +20,7 @@ class EconomySetBonusBuyLimitDelayCommand : CommandManager(
             sendUsage(sender)
             return
         }
-        val timeDelayText = args[1]
+        val timeDelayText = args[0]
         val timeDelay = timeDelayText.parseDuration()
         EduEconomyPlugin.instance.manager.bonusBuyLimitDelay = timeDelay
         sender.sendMessage("§aTempo entre os Aumentos de Limite de Compra definido para ${timeDelay.formatDuration()}")

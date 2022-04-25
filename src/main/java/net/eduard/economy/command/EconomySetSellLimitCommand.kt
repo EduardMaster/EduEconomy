@@ -29,7 +29,7 @@ class EconomySetSellLimitCommand : CommandManager("setselllimit", "difinirlimitd
                 user.updateQueue()
             }
             sender.sendMessage("§aLimite de Venda de todos jogadores definido para ${quantidade.format()}")
-            EduEconomyPlugin.instance.manager.defaultBuyLimit = quantidade
+            EduEconomyPlugin.instance.manager.defaultSellLimit = quantidade
             return
         }
         val conta = EduEconomyPlugin.instance.manager.getAccount(player)
