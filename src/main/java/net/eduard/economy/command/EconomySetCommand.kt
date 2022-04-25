@@ -13,21 +13,21 @@ class EconomySetCommand : CommandManager("set", "setar", "difinir") {
             sendUsage(sender)
             return
         }
-        val fakeplayer = FakePlayer(args[0])
+        val player = FakePlayer(args[0])
         var valor = Extra.fromMoneyToDouble(args[1])
         valor = abs(valor)
-        EduEconomyPlugin.instance.manager.setCoins(fakeplayer, valor)
+        EduEconomyPlugin.instance.manager.setCoins(player, valor)
         if (args.size >= 3) {
-            if (args[2] === "-msg") {
+            if (args[2] == "-msg") {
                 return
             }
         }
         sender.sendMessage(
             EduEconomyPlugin.instance.message("money-set")
-                .replace("%player", fakeplayer.name)
+                .replace("%player", player.name)
                 .replace("%amount", Extra.formatMoney(valor))
         )
-        fakeplayer
+        player
             .sendMessage(
                 EduEconomyPlugin.instance.message("money-changed")
                     .replace("%player", sender.name)

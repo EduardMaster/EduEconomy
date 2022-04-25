@@ -5,6 +5,7 @@ import net.eduard.api.server.currency.CurrencyManager
 import net.eduard.api.lib.modules.FakePlayer
 import net.eduard.api.lib.modules.Mine
 import net.eduard.economy.EduEconomyPlugin
+import java.util.concurrent.TimeUnit
 import kotlin.math.acos
 
 
@@ -12,6 +13,12 @@ class EconomyManager : CurrencyManager() {
 
     var defaultBuyLimit = 100_000_000_000.0
     var defaultSellLimit = 100_000_000_000.0
+    var bonusBuyLimit = 1_000_000.0
+    var bonusBuyLimitDelay = TimeUnit.HOURS.toMillis(1)
+    var bonusSellLimit = 1_000_000.0
+    var bonusSellLimitDelay = TimeUnit.HOURS.toMillis(1)
+    var bonusSellLimitLastTime = System.currentTimeMillis()
+    var bonusBuyLimitLastTime = System.currentTimeMillis()
     var groupsBonus = mutableMapOf<String, Double>()
     var groupsDiscount = mutableMapOf<String, Double>()
 
@@ -55,6 +62,14 @@ class EconomyManager : CurrencyManager() {
                 user.updateBonusAndDiscount()
             }
         }
+    }
+    fun reset(): Int {
+        for (user in users.values) {
+            user.buyLimit = defaultBuyLimit
+            user.sellLimit = defaultSellLimit
+            user.amount = 0.0
+        }
+        return users.size
     }
 
     fun getAccount(player: FakePlayer): EconomyUser {

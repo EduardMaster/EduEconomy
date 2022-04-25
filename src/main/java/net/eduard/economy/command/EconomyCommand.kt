@@ -52,6 +52,11 @@ class EconomyCommand : CommandManager("money","coins","coin","dinheiro") {
         register(EconomyRemoveSellLimitCommand())
         register(EconomySetSellLimitCommand())
 
+        register(EconomySetBonusBuyLimitCommand())
+        register(EconomySetBonusSellLimitCommand())
+        register(EconomySetBonusBuyLimitDelayCommand())
+        register(EconomySetBonusSellLimitDelayCommand())
+        register(EconomyResetCommand())
 
     }
 }

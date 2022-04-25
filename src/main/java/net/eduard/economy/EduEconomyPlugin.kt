@@ -12,6 +12,7 @@ import net.eduard.economy.core.EconomyUser
 import net.eduard.economy.hooks.EconomyAPIImpl
 import net.eduard.economy.hooks.EconomyVaultSupport
 import net.eduard.economy.listener.EconomyListener
+import net.eduard.economy.task.GlowBuyLimitAndSellLimitTask
 import net.milkbowl.vault.economy.Economy
 import org.bukkit.Bukkit
 import org.bukkit.plugin.ServicePriority
@@ -39,6 +40,7 @@ class EduEconomyPlugin : EduardPlugin() {
         }
         Mine.addReplacer("buy_limit"){ manager.getAccount(it.fake).buyLimit.format() }
         Mine.addReplacer("sell_limit"){ manager.getAccount(it.fake).sellLimit.format() }
+        GlowBuyLimitAndSellLimitTask().syncTimer()
     }
 
 
@@ -56,6 +58,7 @@ class EduEconomyPlugin : EduardPlugin() {
         messages.add("money-pay-invalid","§cA Quantidade definida não pode ser menor que 1.")
         messages.add("system-reload","§aSistema de Economia recarregado.")
         messages.add("cant-pay-self", "&cVocê não pode enviar dinheiro para sí próprio.");
+        messages.add("money-reset-all","&aFoi resetado %amount Contas.")
 
         messages.add("buy-limit-add", "&aVocê adicionou %amount de Limite de Compra para o jogador %player.")
         messages.add("buy-limit-set", "&aVocê definiu %amount de Limite de Compra para o jogador %player.")

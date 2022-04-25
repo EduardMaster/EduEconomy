@@ -46,8 +46,10 @@ class EconomyUser : DatabaseElement {
 
     var bonus = 0.0
     var discount = 0.0
+
     @ColumnValue("1000000000")
     var buyLimit = 1_000_000_000.0
+
     @ColumnValue("10000000")
     var sellLimit = 10_000_000.0
 
