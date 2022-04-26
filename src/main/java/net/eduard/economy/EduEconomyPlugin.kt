@@ -49,11 +49,7 @@ class EduEconomyPlugin : EduardPlugin() {
         configs.saveConfig()
     }
 
-
-    override fun reload() {
-        configs.reloadConfig()
-        messages.reloadConfig()
-        storage.reloadConfig()
+    override fun configDefault() {
         messages.add("money-discount-bonus-update","§aO Conta do jogador %player foi atualizada seus Desconto e Bonus também")
         messages.add("money-pay-invalid","§cA Quantidade definida não pode ser menor que 1.")
         messages.add("system-reload","§aSistema de Economia recarregado.")
@@ -82,7 +78,7 @@ class EduEconomyPlugin : EduardPlugin() {
         messages.add("money-set", "&aVocê definiu %amount de dinheiro para o jogador %player.")
         messages.add("money-remove", "&aVocê remevou %amount de dinheiro para o jogador %player.")
         messages.add("money-check", "&aSeu dinheiro é %amount.")
-        
+
         messages.add("money-changed", "&aSeu dinheiro foi atualizado pelo jogador %player.")
         messages.add("money-need", "§cDinheiro insuficiente para poder pagar outro jogador.")
         messages.add("money-pay", "§aVocê pagou %amount para o %player.")
@@ -95,6 +91,14 @@ class EduEconomyPlugin : EduardPlugin() {
         messages.add("top-tycoon" , "§2§lMAGNATA")
         messages.add("tycoon-change", "§aO jogador §f%player §ase tornou o novo §b§lMagnata")
         messages.saveConfig()
+    }
+
+    override fun reload() {
+        configs.reloadConfig()
+        messages.reloadConfig()
+        storage.reloadConfig()
+        configDefault()
+
 
         if (configs.contains("economy")) {
             manager = configs["economy", EconomyManager::class.java]
@@ -109,21 +113,30 @@ class EduEconomyPlugin : EduardPlugin() {
             sqlManager.createTable(EconomyUser::class.java)
             sqlManager.createTable<EconomyTransaction>()
             sqlManager.createReferences<EconomyTransaction>()
-            val users = sqlManager.getAllData(EconomyUser::class.java)
-            val stringBuilder = StringBuilder()
-            var amount = 0
-            for (account in users) {
-                val id = account.id
-                manager.users[account.player] = account
-                if (amount<=100) {
-                    stringBuilder.append("§f§a" + account.name.toString() + "($id) §f-> §2" + account.amount.format())
-                    stringBuilder.append(", ")
-                }
-                amount++
-            }
-            log("Contas carregadas: $amount -> $stringBuilder")
+            reloadUsers()
             manager.updateTop()
         }
+    }
+    fun reloadUsers(){
+        val users = sqlManager.getAllData(EconomyUser::class.java)
+        val stringBuilder = StringBuilder()
+        var amount = 0
+        for (account in users) {
+            val id = account.id
+            manager.users[account.player] = account
+            if (account.buyLimit < manager.defaultBuyLimit){
+                account.buyLimit = manager.defaultBuyLimit
+            }
+            if (account.sellLimit < manager.defaultSellLimit){
+                account.sellLimit = manager.defaultSellLimit
+            }
+            if (amount<=100) {
+                stringBuilder.append("§f§a" + account.name.toString() + "($id) §f-> §2" + account.amount.format())
+                stringBuilder.append(", ")
+            }
+            amount++
+        }
+        log("Contas carregadas: $amount -> $stringBuilder")
     }
 
     override fun onDisable() {
