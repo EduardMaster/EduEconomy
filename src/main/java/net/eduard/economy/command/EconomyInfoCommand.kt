@@ -21,6 +21,8 @@ class EconomyInfoCommand : CommandManager("info", "status") {
                 for ((group, percent) in EduEconomyPlugin.instance.manager.groupsDiscount) {
                     sender.sendMessage("§b$group -> §3${percent.percent()}%")
                 }
+                sender.sendMessage("§eLimite de Compra: §a$§7${EduEconomyPlugin.instance.manager.defaultBuyLimit.format()}")
+                sender.sendMessage("§eLimite de Venda: §a$§7${EduEconomyPlugin.instance.manager.defaultSellLimit.format()}")
             }else{
                 sendUsage(sender)
             }
